@@ -4,9 +4,9 @@
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data.Models;
 
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class RestaurantSystemDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public RestaurantSystemDbContext(DbContextOptions<RestaurantSystemDbContext> options)
             : base(options)
         {
         }

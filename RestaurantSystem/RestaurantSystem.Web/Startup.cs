@@ -1,5 +1,6 @@
 ﻿namespace RestaurantSystem.Web
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
-    using RestaurantSystem.Web.Services;
+    using RestaurantSystem.Web.Infrastructure.Extensions;
 
     public class Startup
     {
@@ -23,15 +24,22 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<RestaurantSystemDbContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
+             .AddEntityFrameworkStores<RestaurantSystemDbContext>()
+             .AddDefaultTokenProviders();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddAutoMapper();
+
+            services.AddDomainServices();
 
             services.AddMvc(options =>
             {
@@ -42,6 +50,8 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDataBaseMigration();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,6 +69,10 @@
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+            name: "areas",
+            template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+            );
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
