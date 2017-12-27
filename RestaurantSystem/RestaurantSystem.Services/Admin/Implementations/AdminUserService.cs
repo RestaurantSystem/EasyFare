@@ -1,0 +1,27 @@
+﻿
+namespace RestaurantSystem.Services.Admin.Implementations
+{
+    using AutoMapper.QueryableExtensions;
+    using Microsoft.EntityFrameworkCore;
+    using RestaurantSystem.Data;
+    using RestaurantSystem.Services.Admin.Contracts;
+    using RestaurantSystem.Services.Admin.Models;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    public class AdminUserService : IAdminUserService
+    {
+        private readonly RestaurantSystemDbContext db;
+
+        public AdminUserService(RestaurantSystemDbContext db)
+        {
+            this.db = db;
+        }
+
+        public async Task<IEnumerable<AdminListingServiceModel>> AllAsync()
+        => await this.db
+            .Users
+            .ProjectTo<AdminListingServiceModel>()
+            .ToListAsync();
+    }
+}
