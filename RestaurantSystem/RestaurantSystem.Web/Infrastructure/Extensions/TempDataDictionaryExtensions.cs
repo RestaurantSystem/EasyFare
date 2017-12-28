@@ -1,5 +1,4 @@
-﻿
-namespace RestaurantSystem.Web.Infrastructure.Extensions
+﻿namespace RestaurantSystem.Web.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
