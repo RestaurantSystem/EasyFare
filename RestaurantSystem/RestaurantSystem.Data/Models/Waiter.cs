@@ -1,16 +1,13 @@
 ﻿namespace RestaurantSystem.Data.Models
 {
-    using Infrastructure;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Waiter
+    public class Waiter : User
     {
-        public int Id { get; set; }
-
-        [Required]
-        [StringLength(Constants.WaiterNameMaxLength, ErrorMessage = Constants.WaiterNameLengthErrorMessage, MinimumLength = Constants.WaiterNameMinLength)]
-        public string Name { get; set; }
+        //[Required]
+        //[StringLength(Constants.WaiterNameMaxLength, ErrorMessage = Constants.WaiterNameLengthErrorMessage, MinimumLength = Constants.WaiterNameMinLength)]
+        //public string Name { get; set; }
 
         [Range(0, double.MaxValue)]
         public decimal Salary { get; set; }

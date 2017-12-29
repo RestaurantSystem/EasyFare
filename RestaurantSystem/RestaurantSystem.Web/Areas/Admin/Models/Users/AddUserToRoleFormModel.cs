@@ -1,5 +1,4 @@
-﻿
-namespace RestaurantSystem.Web.Areas.Admin.Models.Users
+﻿namespace RestaurantSystem.Web.Areas.Admin.Models.Users
 {
     using System.ComponentModel.DataAnnotations;
 

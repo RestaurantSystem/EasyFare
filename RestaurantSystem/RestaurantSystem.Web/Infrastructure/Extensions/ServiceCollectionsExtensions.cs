@@ -1,10 +1,9 @@
-﻿
-namespace RestaurantSystem.Web.Infrastructure.Extensions
+﻿namespace RestaurantSystem.Web.Infrastructure.Extensions
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using RestaurantSystem.Services;
     using System.Linq;
     using System.Reflection;
+    using Microsoft.Extensions.DependencyInjection;
+    using RestaurantSystem.Services;
 
     public static class ServiceCollectionsExtensions
     {

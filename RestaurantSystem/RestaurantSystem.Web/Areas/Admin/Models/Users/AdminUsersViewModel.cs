@@ -1,9 +1,8 @@
-﻿
-namespace RestaurantSystem.Web.Areas.Admin.Models.Users
+﻿namespace RestaurantSystem.Web.Areas.Admin.Models.Users
 {
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using RestaurantSystem.Services.Admin.Models;
-    using System.Collections.Generic;
 
     public class AdminUsersViewModel
     {

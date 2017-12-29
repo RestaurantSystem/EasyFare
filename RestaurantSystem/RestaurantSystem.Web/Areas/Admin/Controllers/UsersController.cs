@@ -1,6 +1,7 @@
-﻿
-namespace RestaurantSystem.Web.Areas.Admin.Controllers
+﻿namespace RestaurantSystem.Web.Areas.Admin.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,6 @@ namespace RestaurantSystem.Web.Areas.Admin.Controllers
     using RestaurantSystem.Services.Admin.Contracts;
     using RestaurantSystem.Web.Areas.Admin.Models.Users;
     using RestaurantSystem.Web.Infrastructure.Extensions;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     [Area(WebConstants.AdminArea)]
     [Authorize(Roles = WebConstants.AdministratorRole)]
@@ -32,7 +31,7 @@ namespace RestaurantSystem.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var users = await this.users.AllAsync();
-
+            var rolesa = this.roleManager.Roles;
             var roles = await this.roleManager
                 .Roles
                 .Select(r => new SelectListItem
@@ -60,8 +59,17 @@ namespace RestaurantSystem.Web.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Invalid identity details!");
             }
+
             if (!ModelState.IsValid)
             {
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (model.Role == WebConstants.NoRole)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                await this.userManager.RemoveFromRolesAsync(user, roles);
+                TempData.AddSuccessMessage($@"User {user.UserName} removed from role\s {string.Join(", ", roles)}!");
                 return RedirectToAction(nameof(Index));
             }
 
@@ -71,6 +79,5 @@ namespace RestaurantSystem.Web.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

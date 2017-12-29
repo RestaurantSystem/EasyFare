@@ -10,7 +10,6 @@
     using Microsoft.Extensions.Logging;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Web.Models.AccountViewModels;
-  
 
     [Authorize]
     [Route("[controller]/[action]")]

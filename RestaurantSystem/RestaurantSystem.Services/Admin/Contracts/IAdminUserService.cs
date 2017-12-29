@@ -1,9 +1,8 @@
-﻿
-namespace RestaurantSystem.Services.Admin.Contracts
+﻿namespace RestaurantSystem.Services.Admin.Contracts
 {
-    using RestaurantSystem.Services.Admin.Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using RestaurantSystem.Services.Admin.Models;
 
     public interface IAdminUserService
     {

@@ -1,13 +1,12 @@
-﻿
-namespace RestaurantSystem.Services.Admin.Implementations
+﻿namespace RestaurantSystem.Services.Admin.Implementations
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Services.Admin.Contracts;
     using RestaurantSystem.Services.Admin.Models;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     public class AdminUserService : IAdminUserService
     {

@@ -2,7 +2,7 @@
 {
     public class WaiterSection
     {
-        public int WaiterId { get; set; }
+        public string WaiterId { get; set; }
 
         public Waiter Waiter { get; set; }
 

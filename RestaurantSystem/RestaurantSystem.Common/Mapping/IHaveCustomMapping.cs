@@ -1,5 +1,4 @@
-﻿
-namespace RestaurantSystem.Common.Mapping
+﻿namespace RestaurantSystem.Common.Mapping
 {
     using AutoMapper;
 

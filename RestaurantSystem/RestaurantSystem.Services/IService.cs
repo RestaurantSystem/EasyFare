@@ -1,5 +1,4 @@
-﻿
-namespace RestaurantSystem.Services
+﻿namespace RestaurantSystem.Services
 {
     public interface IService
     {

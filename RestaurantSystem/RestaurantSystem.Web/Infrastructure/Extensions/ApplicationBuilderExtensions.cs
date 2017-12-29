@@ -1,13 +1,13 @@
-﻿
-namespace RestaurantSystem.Web.Infrastructure.Extensions
+﻿namespace RestaurantSystem.Web.Infrastructure.Extensions
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
-    using System.Threading.Tasks;
+    using static WebConstants;
 
     public static class ApplicationBuilderExtensions
     {
@@ -23,12 +23,15 @@ namespace RestaurantSystem.Web.Infrastructure.Extensions
                 Task
                     .Run(async () =>
                     {
-                        var adminName = WebConstants.AdministratorRole;
+                        var adminName = AdministratorRole;
 
                         var roles = new[]
                         {
-                             WebConstants.AdministratorRole,
-
+                             AdministratorRole,
+                             CookRole,
+                             ManagerRole,
+                             WaiterRole,
+                             NoRole
                         };
 
                         foreach (var role in roles)
@@ -53,7 +56,7 @@ namespace RestaurantSystem.Web.Infrastructure.Extensions
                             adminUser = new User
                             {
                                 Email = adminEmail,
-                                UserName = adminName,
+                                UserName = adminName
                             };
 
                             await userManager.CreateAsync(adminUser, "admin123");

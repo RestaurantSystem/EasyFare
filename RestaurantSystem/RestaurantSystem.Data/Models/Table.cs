@@ -1,8 +1,8 @@
 ﻿namespace RestaurantSystem.Data.Models
 {
-    using Infrastructure;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Infrastructure;
 
     public class Table
     {

@@ -34,7 +34,6 @@
         public RestaurantSystemDbContext(DbContextOptions<RestaurantSystemDbContext> options)
             : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

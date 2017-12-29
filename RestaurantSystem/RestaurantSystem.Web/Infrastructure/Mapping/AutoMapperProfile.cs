@@ -1,10 +1,9 @@
-﻿
-namespace RestaurantSystem.Web.Infrastructure.Mapping
+﻿namespace RestaurantSystem.Web.Infrastructure.Mapping
 {
-    using AutoMapper;
-    using RestaurantSystem.Common.Mapping;
     using System;
     using System.Linq;
+    using AutoMapper;
+    using RestaurantSystem.Common.Mapping;
 
     public class AutoMapperProfile : Profile
     {

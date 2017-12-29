@@ -20,8 +20,7 @@
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RestaurantSystemDbContext>(options =>
@@ -46,8 +45,7 @@
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseDataBaseMigration();
@@ -70,8 +68,8 @@
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-            name: "areas",
-            template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
             );
                 routes.MapRoute(
                     name: "default",
