@@ -1,12 +1,11 @@
 ﻿namespace RestaurantSystem.Web.Areas.Cook.Controllers
 {
-    using System;
-    using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Ingredients;
     using RestaurantSystem.Services.Cook.Contracts;
     using RestaurantSystem.Services.Cook.Models.Ingredients;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using static WebConstants;
@@ -31,7 +30,7 @@
             if (direction == PageForward)
             {
                 page++;
-            }            if (direction == "backward" && page > 1)
+            }        
             if (direction == PageBackward && page > 1)
             {
                 page--;
