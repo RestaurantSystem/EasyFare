@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using RestaurantSystem.Services.Admin.Models;
+    using RestaurantSystem.Services.Manager.Models;
 
     public class ManagerUsersViewModel
     {

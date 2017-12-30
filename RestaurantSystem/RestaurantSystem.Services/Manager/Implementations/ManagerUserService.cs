@@ -5,14 +5,14 @@
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
-    using RestaurantSystem.Services.Admin.Contracts;
-    using RestaurantSystem.Services.Admin.Models;
+    using RestaurantSystem.Services.Manager.Contracts;
+    using RestaurantSystem.Services.Manager.Models;
 
-    public class AdminUserService : IAdminUserService
+    public class ManagerUserService : IManagerUserService
     {
         private readonly RestaurantSystemDbContext db;
 
-        public AdminUserService(RestaurantSystemDbContext db)
+        public ManagerUserService(RestaurantSystemDbContext db)
         {
             this.db = db;
         }

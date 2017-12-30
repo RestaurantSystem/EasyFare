@@ -33,7 +33,9 @@
                     @if (User.IsInRole(WebConstants.ManagerRole))
                     {
                         <li><a asp-area="Manager" asp-controller="Users" asp-action="Index"><span class="navbarText">Users</span></a></li>
-                    }@if (User.IsInRole(WebConstants.CookRole))
+                        <li><a asp-area="Manager" asp-controller="Ingredients" asp-action="Add"><span class="navbarText">Add ingredient</span></a></li>
+                    }
+                    @if (User.IsInRole(WebConstants.CookRole))
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,6 +65,13 @@
                 @TempData[WebConstants.SuccessMessageKey]
             </div>
         }
+        else if (TempData.ContainsKey(WebConstants.ErrorMessageKey))
+        {
+            <div class="alert alert-danger">
+                @TempData[WebConstants.ErrorMessageKey]
+            </div>
+        }
+
         @RenderBody()
         <hr />
         <footer>

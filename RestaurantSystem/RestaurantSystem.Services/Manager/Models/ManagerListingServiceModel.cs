@@ -1,4 +1,4 @@
-﻿namespace RestaurantSystem.Services.Admin.Models
+﻿namespace RestaurantSystem.Services.Manager.Models
 {
     using RestaurantSystem.Common.Mapping;
     using RestaurantSystem.Data.Models;

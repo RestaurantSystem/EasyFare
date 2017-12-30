@@ -1,10 +1,10 @@
-﻿namespace RestaurantSystem.Services.Admin.Contracts
+﻿namespace RestaurantSystem.Services.Manager.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using RestaurantSystem.Services.Admin.Models;
+    using RestaurantSystem.Services.Manager.Models;
 
-    public interface IAdminUserService
+    public interface IManagerUserService
     {
         Task<IEnumerable<ManagerListingServiceModel>> AllAsync();
     }
