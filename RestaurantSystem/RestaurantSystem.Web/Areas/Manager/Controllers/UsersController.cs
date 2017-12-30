@@ -1,4 +1,4 @@
-﻿namespace RestaurantSystem.Web.Areas.Admin.Controllers
+﻿namespace RestaurantSystem.Web.Areas.Manager.Controllers
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -9,11 +9,11 @@
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Admin.Contracts;
-    using RestaurantSystem.Web.Areas.Admin.Models.Users;
+    using RestaurantSystem.Web.Areas.Manager.Models.Users;
     using RestaurantSystem.Web.Infrastructure.Extensions;
 
-    [Area(WebConstants.AdminArea)]
-    [Authorize(Roles = WebConstants.AdministratorRole)]
+    [Area(WebConstants.ManagerArea)]
+    [Authorize(Roles = WebConstants.ManagerRole)]
     public class UsersController : Controller
     {
         private readonly IAdminUserService users;
@@ -41,7 +41,7 @@
                 })
                 .ToListAsync();
 
-            return View(new AdminUsersViewModel
+            return View(new ManagerUsersViewModel
             {
                 Users = users,
                 Roles = roles

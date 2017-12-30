@@ -23,11 +23,10 @@
                 Task
                     .Run(async () =>
                     {
-                        var adminName = AdministratorRole;
+                        var managerName = ManagerRole;
 
                         var roles = new[]
                         {
-                             AdministratorRole,
                              CookRole,
                              ManagerRole,
                              WaiterRole,
@@ -47,25 +46,26 @@
                             }
                         }
 
-                        var adminEmail = "admin@admin.com";
+                        var managerEmail = "manager@manager.com";
 
-                        var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                        var managerUser = await userManager.FindByEmailAsync(managerEmail);
 
-                        if (adminUser == null)
+                        if (managerUser == null)
                         {
-                            adminUser = new User
+                            managerUser = new User
                             {
-                                Email = adminEmail,
-                                UserName = adminName
+                                Email = managerEmail,
+                                UserName = managerName,
+                                Salary = 0
                             };
 
-                            await userManager.CreateAsync(adminUser, "admin123");
+                            await userManager.CreateAsync(managerUser, "Manager");
 
-                            await userManager.AddToRoleAsync(adminUser, adminName);
+                            await userManager.AddToRoleAsync(managerUser, managerName);
                         }
-                    })
-                    .Wait();
+                    }).Wait();
             }
+
             return app;
         }
     }

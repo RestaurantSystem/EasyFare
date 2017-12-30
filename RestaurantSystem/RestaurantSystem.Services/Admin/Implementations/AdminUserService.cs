@@ -17,10 +17,10 @@
             this.db = db;
         }
 
-        public async Task<IEnumerable<AdminListingServiceModel>> AllAsync()
+        public async Task<IEnumerable<ManagerListingServiceModel>> AllAsync()
         => await this.db
             .Users
-            .ProjectTo<AdminListingServiceModel>()
+            .ProjectTo<ManagerListingServiceModel>()
             .ToListAsync();
     }
 }

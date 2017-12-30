@@ -30,9 +30,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (User.IsInRole(WebConstants.AdministratorRole))
+                    @if (User.IsInRole(WebConstants.ManagerRole))
                     {
-                        <li><a asp-area="Admin" asp-controller="Users" asp-action="Index"><span class="navbarText">Users</span></a></li>
+                        <li><a asp-area="Manager" asp-controller="Users" asp-action="Index"><span class="navbarText">Users</span></a></li>
                     }@if (User.IsInRole(WebConstants.CookRole))
                     {
                         <li class="nav-item dropdown">
