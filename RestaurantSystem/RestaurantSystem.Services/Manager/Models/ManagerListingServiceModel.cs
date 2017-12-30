@@ -1,9 +1,9 @@
-﻿namespace RestaurantSystem.Services.Admin.Models
+﻿namespace RestaurantSystem.Services.Manager.Models
 {
     using RestaurantSystem.Common.Mapping;
     using RestaurantSystem.Data.Models;
 
-    public class AdminListingServiceModel : IMapFrom<User>
+    public class ManagerListingServiceModel : IMapFrom<User>
     {
         public string Id { get; set; }
 

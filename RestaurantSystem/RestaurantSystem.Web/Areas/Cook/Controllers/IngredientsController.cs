@@ -1,11 +1,12 @@
 ﻿namespace RestaurantSystem.Web.Areas.Cook.Controllers
 {
+    using System;
+    using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Ingredients;
     using RestaurantSystem.Services.Cook.Contracts;
     using RestaurantSystem.Services.Cook.Models.Ingredients;
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using static WebConstants;
@@ -14,25 +15,31 @@
     [Authorize(Roles = CookRole)]
     public class IngredientsController : Controller
     {
+
         private readonly ICookIngredientsService ingredients;
+
 
         public IngredientsController(ICookIngredientsService ingredients)
         {
             this.ingredients = ingredients;
         }
 
+
         public async Task<IActionResult> Index(string direction, int page = 1, string search = "")
         {
+
             if (direction == PageForward)
             {
                 page++;
-            }
+            }            if (direction == "backward" && page > 1)
             if (direction == PageBackward && page > 1)
             {
                 page--;
             }
 
+            //int pageDown = Model.Page > 1 ? Model.Page - 1 : Model.Page;
             IngredientsPaginationAndSearchModel ingredients = await this.ingredients.GetIngredients(search, page);
+
 
             ingredients.TotalPages = (int)Math.Ceiling(((double)ingredients.ItemsCount / CookConstants.IngredientsPerPage));
 
