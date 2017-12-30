@@ -2,43 +2,37 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Models.Ingredients;
     using RestaurantSystem.Services.Cook.Contracts;
     using RestaurantSystem.Services.Cook.Models.Ingredients;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using static WebConstants;
 
     [Area(CookRole)]
     [Authorize(Roles = CookRole)]
     public class IngredientsController : Controller
     {
-        private readonly IIngredientsService ingredients;
+        private readonly ICookIngredientsService ingredients;
 
-        public IngredientsController(IIngredientsService ingredients)
+        public IngredientsController(ICookIngredientsService ingredients)
         {
             this.ingredients = ingredients;
         }
 
-        public IActionResult Index(string direction, int page = 1, string search = "")
+        public async Task<IActionResult> Index(string direction, int page = 1, string search = "")
         {
-            if (direction == "forward")
+            if (direction == PageForward)
             {
                 page++;
             }
-            if (direction == "backward" && page > 1)
+            if (direction == PageBackward && page > 1)
             {
                 page--;
             }
 
-            //int pageUp = (double)itemsCount / (itemsPerPage * Model.Page) > 1 ? Model.Page + 1 : Model.Page;
-            //int pageDown = Model.Page > 1 ? Model.Page - 1 : Model.Page;
-
-            //if (search == null)
-            //{
-            //    search = string.Empty;
-            //}
-
-            IngredientsPaginationAndSearchModel ingredients = this.ingredients.GetIngredients(search, page);
+            IngredientsPaginationAndSearchModel ingredients = await this.ingredients.GetIngredients(search, page);
 
             ingredients.TotalPages = (int)Math.Ceiling(((double)ingredients.ItemsCount / CookConstants.IngredientsPerPage));
 
@@ -55,6 +49,74 @@
                 .ToList();
 
             return this.View(ingredients);
+        }
+
+        public async Task<IActionResult> Create() => this.View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(IngredientCreateModel ingredientModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(ingredientModel);
+            }
+
+            bool isSuccessfullyCreated = await this.ingredients.Create(ingredientModel.Name, ingredientModel.QuantityInStock, ingredientModel.MinStockQuantityTreshold);
+
+            if (isSuccessfullyCreated)
+            {
+                this.TempData[SuccessMessageKey] = string.Format(CookConstants.IngredientCreationSuccessMessage, ingredientModel.Name);
+            }
+            else
+            {
+                this.ModelState.AddModelError("Name", CookConstants.IngredientExistsErrorMessage);
+                return this.View(ingredientModel);
+            }
+
+            return this.RedirectToAction(nameof(IngredientsController.Index));
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            IngredientEditModel ingredient = await this.ingredients.GetIngredientToEdit(id);
+
+            if (ingredient == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(ingredient);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(IngredientEditModel ingredientModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(ingredientModel);
+            }
+
+            bool? isSuccessfullyEdited = await this.ingredients.Edit(ingredientModel.Id, ingredientModel.Name, ingredientModel.MinStockQuantityTreshold);
+
+            if (isSuccessfullyEdited == null)
+            {
+                return this.NotFound();
+            }
+
+            if (isSuccessfullyEdited.Value)
+            {
+                this.TempData[SuccessMessageKey] = string.Format(CookConstants.IngredientEditionSuccessMessage, ingredientModel.Name);
+            }
+            else
+            {
+                this.ModelState.AddModelError("Name", CookConstants.IngredientExistsErrorMessage);
+                return this.View(ingredientModel);
+            }
+
+            return this.RedirectToAction(nameof(IngredientsController.Index));
+
         }
     }
 }

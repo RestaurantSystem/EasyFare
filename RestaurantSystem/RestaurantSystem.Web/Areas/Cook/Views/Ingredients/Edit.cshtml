@@ -1,0 +1,36 @@
+﻿@model IngredientEditModel
+
+@{
+    ViewData["Edit"] = "Edit";
+}
+
+<h2>Edit ingredient</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" class="form-horizontal">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div hidden>
+                <input type="text" name="Id" value=@Model.Id />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinStockQuantityTreshold"></label>
+                <input asp-for="MinStockQuantityTreshold" class="form-control" />
+                <span asp-validation-for="MinStockQuantityTreshold" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success">Edit</button>
+            <a class="btn btn-default" asp-area="Cook" asp-controller="Ingredients" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

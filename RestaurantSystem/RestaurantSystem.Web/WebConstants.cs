@@ -16,5 +16,8 @@
         public const string WaiterArea = "Waiter";
         public const string CookArea = "Cook";
         public const string ManagerArea = "Manager";
+
+        public const string PageForward = "forward";
+        public const string PageBackward = "backward";
     }
 }

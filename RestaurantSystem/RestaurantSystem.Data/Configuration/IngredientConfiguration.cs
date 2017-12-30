@@ -8,7 +8,7 @@ namespace RestaurantSystem.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Ingredient> builder)
         {
-            builder.HasAlternateKey(e => e.Name);
+            builder.HasIndex(e => e.Name).IsUnique();
         }
     }
 }
