@@ -4,7 +4,7 @@
     {
         public string WaiterId { get; set; }
 
-        public Waiter Waiter { get; set; }
+        public User Waiter { get; set; }
 
         public int SectionId { get; set; }
 

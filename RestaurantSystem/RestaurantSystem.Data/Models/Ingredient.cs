@@ -19,6 +19,9 @@
         [Range(0, double.MaxValue)]
         public float QuantityInStock { get; set; }
 
+        [Range(0, double.MaxValue)]
+        public float MinStockQuantityTreshold { get; set; }
+
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
     }
 }

@@ -26,4 +26,8 @@
     <ProjectReference Include="..\RestaurantSystem.Services\RestaurantSystem.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Cook\Models\Ingredients\" />
+  </ItemGroup>
+
 </Project>

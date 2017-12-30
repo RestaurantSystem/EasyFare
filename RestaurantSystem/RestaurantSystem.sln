@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantSystem.Web", "RestaurantSystem.Web\RestaurantSystem.Web.csproj", "{AAB802EF-7341-43DA-AC85-6AD48A43E1B5}"
 EndProject
@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantSystem.Data", "Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantSystem.Services", "RestaurantSystem.Services\RestaurantSystem.Services.csproj", "{F105D4AF-651F-47F2-93A9-469BB160332D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantSystem.Common", "RestaurantSystem.Common\RestaurantSystem.Common.csproj", "{04930290-4C04-43DC-94F8-125BAE4A7BE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantSystem.Common", "RestaurantSystem.Common\RestaurantSystem.Common.csproj", "{04930290-4C04-43DC-94F8-125BAE4A7BE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

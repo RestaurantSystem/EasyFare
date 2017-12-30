@@ -5,16 +5,17 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using RestaurantSystem.Data;
-using RestaurantSystem.Data.Infrastructure.Enumerations;
 using System;
 
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    partial class RestaurantSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171230114101_UserHasWaiterSections")]
+    partial class UserHasWaiterSections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,8 +145,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<float>("MinStockQuantityTreshold");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150);
@@ -185,8 +184,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<decimal>("Price");
 
                     b.Property<int>("RecipeId");
-
-                    b.Property<int>("Type");
 
                     b.HasKey("Id");
 
@@ -303,6 +300,9 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -346,6 +346,8 @@ namespace RestaurantSystem.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
             modelBuilder.Entity("RestaurantSystem.Data.Models.WaiterSection", b =>
@@ -359,6 +361,16 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasIndex("SectionId");
 
                     b.ToTable("WaiterSections");
+                });
+
+            modelBuilder.Entity("RestaurantSystem.Data.Models.Waiter", b =>
+                {
+                    b.HasBaseType("RestaurantSystem.Data.Models.User");
+
+
+                    b.ToTable("Waiter");
+
+                    b.HasDiscriminator().HasValue("Waiter");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -475,7 +487,7 @@ namespace RestaurantSystem.Data.Migrations
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("RestaurantSystem.Data.Models.User", "Waiter")
+                    b.HasOne("RestaurantSystem.Data.Models.Waiter", "Waiter")
                         .WithMany("WaiterSections")
                         .HasForeignKey("WaiterId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Infrastructure;
+    using RestaurantSystem.Data.Infrastructure.Enumerations;
 
     public class Product
     {
@@ -14,6 +15,8 @@
 
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
+
+        public ProductType Type { get; set; }
 
         public int RecipeId { get; set; }
 

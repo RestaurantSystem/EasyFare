@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using RestaurantSystem.Data;
-using RestaurantSystem.Data.Infrastructure.Enumerations;
 using System;
 
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    partial class RestaurantSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171230114205_UserUpdated")]
+    partial class UserUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,8 +144,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<float>("MinStockQuantityTreshold");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150);
@@ -185,8 +183,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<decimal>("Price");
 
                     b.Property<int>("RecipeId");
-
-                    b.Property<int>("Type");
 
                     b.HasKey("Id");
 

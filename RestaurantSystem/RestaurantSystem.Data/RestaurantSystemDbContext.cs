@@ -11,8 +11,6 @@
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<Waiter> Waiters { get; set; }
-
         public DbSet<Section> Sections { get; set; }
 
         public DbSet<WaiterSection> WaiterSections { get; set; }

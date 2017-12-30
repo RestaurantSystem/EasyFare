@@ -43,7 +43,7 @@
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Salary = table.Column<decimal>(nullable: true)
+                    Salary = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {

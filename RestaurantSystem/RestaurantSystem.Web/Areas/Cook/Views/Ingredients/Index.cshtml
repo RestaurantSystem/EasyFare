@@ -1,0 +1,81 @@
+﻿@model IngredientsPaginationAndSearchModel
+
+@{
+    ViewData["Title"] = "Ingredients";
+    string searchString = Model.Search == "" ? null : Model.Search;
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <a asp-area="Cook" asp-controller="Ingredients" asp-action="Create" class="btn btn-success">Create</a>
+    </div>
+    <div class="col-md-6">
+
+        <form class="pull-right" method="get" asp-area="Cook" asp-controller="Ingredients" asp-action="Index">
+            <input hidden type="text" name="page" value="1" />
+            <input type="search" placeholder="search by name" name="search" value=@searchString />
+            <input class="btn btn-info" type="submit" value="Search" />
+        </form>
+
+    </div>
+</div>
+
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="col-xs-1">
+                Ingredient
+            </th>
+            <th class="col-xs-1">
+                Stock
+            </th>
+            <th class="col-xs-1">
+                Min quantity treshold
+            </th>
+            <th class="col-xs-1">
+                Used in products
+            </th>
+            <th class="col-xs-1">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ingredient in Model.Ingredients)
+            {
+            <tr>
+                <td>
+                    @ingredient.Name
+                </td>
+                <td>
+                    @ingredient.QuantityInStock
+                </td>
+                <td>
+                    @ingredient.MinStockQuantityTreshold
+                </td>
+                <td>
+                    @ingredient.UsedInProductsCount
+                </td>
+                <td>
+                    <div>
+                        <a class="btn btn-sm btn-warning" asp-area="Cook" asp-controller="Ingredients" asp-action="Edit" asp-route-id=@ingredient.Id>Edit</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>Page @Model.Page of @Model.TotalPages</p>
+
+
+<div>
+    <a class="btn btn-default" asp-area="Cook" asp-controller="Ingredients" asp-action="Index" asp-all-route-data="@(new Dictionary<string, string> { { "page", Model.Page.ToString()}, { "direction", "backward"}, { "search", Model.Search} })">&#8678;</a>
+    <span class="btn btn-default">@Model.Page</span>
+    <a class="btn btn-default" asp-area="Cook" asp-controller="Ingredients" asp-action="Index" asp-all-route-data="@(new Dictionary<string, string> {  { "page", Model.Page.ToString()}, { "direction", "forward"}, { "search", Model.Search} })">&#8680;</a>
+</div>
