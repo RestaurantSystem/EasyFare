@@ -1,11 +1,14 @@
 ﻿namespace RestaurantSystem.Services.Manager.Implementations
 {
+    using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Infrastructure.Enumerations;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Manager.Contracts;
+    using RestaurantSystem.Services.Manager.Models;
 
     public class ManagerProductsService : IManagerProductsService
     {
@@ -16,7 +19,7 @@
             this.db = db;
         }
 
-        public async Task<bool> BuyNewProductAsync(string name, decimal price, ProductType type)
+        public async Task<bool> AddNewProductAsync(string name, decimal price, bool isCookable, ProductType type)
         {
             Product exists = await this.db.Products.FirstOrDefaultAsync(n => n.Name == name);
 
@@ -29,6 +32,7 @@
             {
                 Name = name,
                 Price = price,
+                IsCookable = isCookable,
                 Type = type
             };
 
@@ -36,6 +40,68 @@
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<ProductsPaginationAndSearchModel> GetProducts(string search, int page)
+        {
+            ProductsListModel[] products = await this.db.Products
+                .ProjectTo<ProductsListModel>()
+                .OrderBy(i => i.Name)
+                .ToArrayAsync();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                products = products
+                    .Where(i => i.Name.ToLower().Contains(search.ToLower()))
+                    .ToArray();
+            }
+
+            return new ProductsPaginationAndSearchModel
+            {
+                Products = products,
+                ItemsCount = products.Count(),
+                Search = search,
+                Page = page
+            };
+        }
+
+        public async Task EditAsync(int id, string name, decimal price, bool isCookable, ProductType type)
+        {
+            Product exists = await this.db.Products.FindAsync(id);
+
+            if (exists == null)
+            {
+                return;
+            }
+
+            //exists.Name = name;
+            exists.Price = price;
+            exists.IsCookable = isCookable;
+            exists.Type = type;
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task<ProductsListModel> FindByIdAsync(int id)
+        {
+            var result = await this.db.Products
+               .Where(c => c.Id == id)
+               .ProjectTo<ProductsListModel>()
+               .FirstOrDefaultAsync();
+
+            return result;
+        }
+
+        public async Task<bool> DoesProductExistsAsync(string name)
+        {
+            Product product = await this.db.Products.FirstOrDefaultAsync(a => a.Name.ToLower() == name.ToLower());
+
+            if (product != null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

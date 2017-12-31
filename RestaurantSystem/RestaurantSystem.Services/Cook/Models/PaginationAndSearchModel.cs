@@ -9,6 +9,5 @@
         public int TotalPages { get; set; }
 
         public string Search { get; set; }
-
     }
 }
