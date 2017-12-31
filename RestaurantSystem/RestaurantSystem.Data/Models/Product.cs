@@ -15,6 +15,8 @@
 
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
+        
+        public bool IsCookable { get; set; }
 
         public ProductType Type { get; set; }
 
