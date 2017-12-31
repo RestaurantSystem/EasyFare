@@ -33,7 +33,7 @@
                     @if (User.IsInRole(WebConstants.ManagerRole))
                     {
                         <li><a asp-area="Manager" asp-controller="Users" asp-action="Index"><span class="navbarText">Users</span></a></li>
-                        <li><a asp-area="Manager" asp-controller="Ingredients" asp-action="Add"><span class="navbarText">Add ingredient</span></a></li>
+                        <li><a asp-area="Manager" asp-controller="Products" asp-action="Buy"><span class="navbarText">Buy products</span></a></li>
                     }
                     @if (User.IsInRole(WebConstants.CookRole))
                     {

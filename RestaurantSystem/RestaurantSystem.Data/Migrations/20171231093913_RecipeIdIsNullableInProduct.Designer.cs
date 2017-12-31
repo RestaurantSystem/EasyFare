@@ -12,9 +12,10 @@ using System;
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    partial class RestaurantSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171231093913_RecipeIdIsNullableInProduct")]
+    partial class RecipeIdIsNullableInProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
