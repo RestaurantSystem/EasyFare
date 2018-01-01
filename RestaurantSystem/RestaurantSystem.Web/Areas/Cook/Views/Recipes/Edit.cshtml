@@ -1,0 +1,104 @@
+﻿@model RecipeEditModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h2>Create/Modify recipe for @Model.ProductName</h2>
+<hr />
+
+<h4>Add ingredient</h4>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" class="form-inline">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div hidden>
+                <input asp-for="RecipeId" />
+            </div>
+            <div hidden>
+                <input asp-for="ProductId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="IngredientId">Ingredient</label>
+                <select asp-for="IngredientId"
+                        asp-items="@(new SelectList(Model.Ingredients,"Id","Name"))" class="form-control">
+                    <option>Please select one</option>
+                </select>
+            </div>
+            <div>
+                <label asp-for="Quantity"></label>
+                <input asp-for="Quantity" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-success">Add</button>
+            <a class="btn btn-default" asp-area="Cook" asp-controller="Ingredients" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 table-title">
+        <div class="col-sm-5">
+            <h3> Ingredients </h3>
+        </div>
+        <div class="pull-right">
+            <a id="deleteButton" class="btn btn btn-info">Delete selected</a>
+        </div>
+    </div>
+    <div class="col-sm-12">
+
+        <div>
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th id="checkbox-all">
+                            <input type="checkbox" name="select-all" id="select-all" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="container">
+
+                    @await Component.InvokeAsync("IncludedIngredients", new { id = Model.RecipeId })
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $('#deleteButton').click(function () {
+
+            var data = { 'recipeId' : @Model.RecipeId, 'ingredientsIds': [] };
+            $(":checked").each(function () {
+                data['ingredientsIds'].push($(this).val());
+            });
+            $.post("/cook/recipes/deleteRecipeIngredients", data, function (receivedData, status) {
+                ReloadData(receivedData)
+            });
+        });
+
+        function ReloadData(receivedData) {
+
+            $("#container").load('/cook/recipes/updateRecipeIngredients/' + @Model.RecipeId);
+        }
+
+        $("#checkbox-all").on('click', '#select-all', function () {
+            $(':checkbox').prop('checked', $(this).prop("checked"));
+        });
+
+    </script>
+
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

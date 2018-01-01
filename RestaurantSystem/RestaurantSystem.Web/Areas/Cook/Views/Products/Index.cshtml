@@ -1,0 +1,91 @@
+﻿@model ProductsPaginationAndSearchModel
+
+@{
+    ViewData["Title"] = "Products";
+    string searchString = Model.Search == "" ? null : Model.Search;
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+
+<div class="row">
+
+    <div class="col-md-offset-6 col-md-6">
+
+        <form class="pull-right" method="get" asp-area="Cook" asp-controller="Products" asp-action="Index">
+            <input hidden type="text" name="page" value="1" />
+            <input type="search" placeholder="search by name" name="search" value=@searchString />
+            <input class="btn btn-info" type="submit" value="Search" />
+        </form>
+
+    </div>
+</div>
+
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="col-xs-1">
+                Product
+            </th>
+            <th class="col-xs-1">
+                Price
+            </th>
+            <th class="col-xs-1">
+                Type
+            </th>
+            <th class="col-xs-1">
+                Is cookable
+            </th>
+            <th class="col-xs-1">
+                Has recipe
+            </th>
+            <th class="col-xs-1">
+                Order times
+            </th>
+            <th class="col-xs-1">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+            {
+            <tr>
+                <td>
+                    @product.Name
+                </td>
+                <td>
+                    @product.Price
+                </td>
+                <td>
+                    @product.Type
+                </td>
+                <td>
+                    @Html.DisplayFor(m => @product.IsCookable)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => @product.HasRecipe)
+                </td>
+                <td>
+                    @product.OrderTimes
+                </td>
+                <td>
+                    <div>
+                        <a class="btn btn-sm btn-warning" asp-area="Cook" asp-controller="Recipes" asp-action="Edit" asp-route-productId=@product.Id>Recipe</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>Page @Model.Page of @Model.TotalPages</p>
+
+
+<div>
+    <a class="btn btn-default" asp-area="Cook" asp-controller="Products" asp-action="Index" asp-all-route-data="@(new Dictionary<string, string> { { "page", Model.Page.ToString()}, { "direction", "backward"}, { "search", Model.Search} })">&#8678;</a>
+    <span class="btn btn-default">@Model.Page</span>
+    <a class="btn btn-default" asp-area="Cook" asp-controller="Products" asp-action="Index" asp-all-route-data="@(new Dictionary<string, string> {  { "page", Model.Page.ToString()}, { "direction", "forward"}, { "search", Model.Search} })">&#8680;</a>
+</div>

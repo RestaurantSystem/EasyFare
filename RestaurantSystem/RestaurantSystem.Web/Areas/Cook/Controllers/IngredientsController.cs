@@ -32,7 +32,6 @@
                 page--;
             }
 
-            //int pageDown = Model.Page > 1 ? Model.Page - 1 : Model.Page;
             IngredientsPaginationAndSearchModel ingredients = await this.ingredients.GetIngredients(search, page);
 
             ingredients.TotalPages = (int)Math.Ceiling(((double)ingredients.ItemsCount / CookConstants.IngredientsPerPage));

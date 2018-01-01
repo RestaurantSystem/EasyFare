@@ -1,6 +1,7 @@
 ﻿namespace RestaurantSystem.Services.Cook.Contracts
 {
     using RestaurantSystem.Services.Cook.Models.Ingredients;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface ICookIngredientsService

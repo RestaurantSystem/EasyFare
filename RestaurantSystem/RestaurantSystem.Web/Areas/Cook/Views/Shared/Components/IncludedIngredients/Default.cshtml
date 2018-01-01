@@ -1,0 +1,23 @@
+﻿@model IEnumerable<RecipeIngredientListModel>
+
+@{
+
+    @foreach (var recipeIngredient in Model)
+    {
+        <tr>
+            <td>
+                @recipeIngredient.Name
+            </td>
+            <td>
+                @recipeIngredient.Quantity
+            </td>
+            <td>
+                <input type="checkbox" name="ingredientsIds" value=@recipeIngredient.Id />
+            </td>
+        </tr>
+    }
+
+}
+
+
+
