@@ -1,8 +1,5 @@
 ﻿namespace RestaurantSystem.Services.Cook.Implementations
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Contracts;
     using Microsoft.EntityFrameworkCore;
@@ -10,6 +7,9 @@
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Cook.Infrastructure;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class CookIngredientsService : ICookIngredientsService
     {
