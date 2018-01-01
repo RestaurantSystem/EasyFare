@@ -20,7 +20,7 @@
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RestaurantSystemDbContext>(options =>
@@ -45,7 +45,7 @@
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
         }
-        
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseDataBaseMigration();

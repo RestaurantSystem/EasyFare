@@ -4,7 +4,7 @@
     using RestaurantSystem.Data.Infrastructure;
     using RestaurantSystem.Data.Infrastructure.Enumerations;
 
-    public class BuyProductModel
+    public class AddProductModel
     {
         [Required]
         [StringLength(Constants.ProductNameMaxLength, ErrorMessage = Constants.ProductNameLengthErrorMessage, MinimumLength = Constants.ProductNameMinLength)]
@@ -12,6 +12,8 @@
 
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
+
+        public bool IsCookable { get; set; }
 
         public ProductType Type { get; set; }
     }

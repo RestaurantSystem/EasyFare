@@ -6,6 +6,6 @@
     [Area(WebConstants.ManagerArea)]
     [Authorize(Roles = WebConstants.ManagerRole)]
     public class ManagerBaseController : Controller
-    {     
+    {
     }
 }
