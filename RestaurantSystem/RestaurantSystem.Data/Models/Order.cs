@@ -18,5 +18,7 @@
         public ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
 
         public ICollection<Table> Tables { get; set; } = new List<Table>();
+
+        public ICollection<WaiterOrder> WaiterOrders { get; set; } = new List<WaiterOrder>();
     }
 }
