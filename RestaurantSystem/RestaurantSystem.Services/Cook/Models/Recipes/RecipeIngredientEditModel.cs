@@ -1,9 +1,9 @@
 ﻿namespace RestaurantSystem.Services.Cook.Models.Recipes
 {
+    using System.ComponentModel.DataAnnotations;
     using AutoMapper;
     using RestaurantSystem.Common.Mapping;
     using RestaurantSystem.Data.Models;
-    using System.ComponentModel.DataAnnotations;
 
     public class RecipeIngredientEditModel : IMapFrom<RecipeIngredient>, IHaveCustomMapping
     {

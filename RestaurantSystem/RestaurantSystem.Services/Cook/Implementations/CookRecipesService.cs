@@ -1,5 +1,8 @@
 ﻿namespace RestaurantSystem.Services.Cook.Implementations
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
@@ -7,9 +10,6 @@
     using RestaurantSystem.Services.Cook.Contracts;
     using RestaurantSystem.Services.Cook.Models.Ingredients;
     using RestaurantSystem.Services.Cook.Models.Recipes;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class CookRecipesService : ICookRecipesService
     {
@@ -26,7 +26,6 @@
             {
                 return null;
             }
-
             else if (recipeId == null)
             {
                 Product product = await this.db.Products.FindAsync(productId);
@@ -53,7 +52,6 @@
 
                 return recipe.Id;
             }
-
             else
             {
                 if (this.db.RecipeIngredients.Any(ri => ri.IngredientId == ingreditnId && ri.RecipeId == recipeId))
@@ -89,7 +87,7 @@
 
                     if (recipeIngredient != null)
                     {
-                        this.db.RecipeIngredients.Remove(recipeIngredient);                    
+                        this.db.RecipeIngredients.Remove(recipeIngredient);
                     }
                 }
 

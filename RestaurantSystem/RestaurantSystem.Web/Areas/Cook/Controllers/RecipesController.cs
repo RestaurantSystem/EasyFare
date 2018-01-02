@@ -1,12 +1,10 @@
 ﻿namespace RestaurantSystem.Web.Areas.Cook.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantSystem.Services.Cook.Contracts;
-    using RestaurantSystem.Services.Cook.Models.Ingredients;
     using RestaurantSystem.Services.Cook.Models.Recipes;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using static WebConstants;
 
     [Area(CookRole)]

@@ -4,7 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-
 <h2>Create/Modify recipe for @Model.ProductName</h2>
 <hr />
 
@@ -66,13 +65,11 @@
                 <tbody id="container">
 
                     @await Component.InvokeAsync("IncludedIngredients", new { id = Model.RecipeId })
-
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 
 @section Scripts {
 
@@ -96,9 +93,7 @@
         $("#checkbox-all").on('click', '#select-all', function () {
             $(':checkbox').prop('checked', $(this).prop("checked"));
         });
-
     </script>
-
 
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

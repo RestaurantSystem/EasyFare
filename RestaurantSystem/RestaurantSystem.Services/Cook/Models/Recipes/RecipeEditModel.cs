@@ -1,8 +1,8 @@
 ﻿namespace RestaurantSystem.Services.Cook.Models.Recipes
 {
-    using RestaurantSystem.Services.Cook.Models.Ingredients;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using RestaurantSystem.Services.Cook.Models.Ingredients;
 
     public class RecipeEditModel
     {

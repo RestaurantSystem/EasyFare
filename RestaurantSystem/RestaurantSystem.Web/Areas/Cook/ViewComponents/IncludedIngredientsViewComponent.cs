@@ -1,9 +1,9 @@
 ﻿namespace RestaurantSystem.Web.Areas.Cook.ViewComponents
 {
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantSystem.Services.Cook.Contracts;
     using RestaurantSystem.Services.Cook.Models.Recipes;
-    using System.Collections.Generic;
 
     public class IncludedIngredientsViewComponent : ViewComponent
     {

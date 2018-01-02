@@ -1,12 +1,12 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Services.Waiter.Contracts;
     using RestaurantSystem.Services.Waiter.Models.Tables;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     public class TablesService : ITablesService
     {

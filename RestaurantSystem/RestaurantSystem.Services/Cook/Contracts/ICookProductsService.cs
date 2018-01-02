@@ -1,7 +1,7 @@
 ﻿namespace RestaurantSystem.Services.Cook.Contracts
 {
-    using RestaurantSystem.Services.Cook.Models.Products;
     using System.Threading.Tasks;
+    using RestaurantSystem.Services.Cook.Models.Products;
 
     public interface ICookProductsService
     {
