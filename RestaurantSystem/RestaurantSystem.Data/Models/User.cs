@@ -14,6 +14,6 @@
 
         public ICollection<WaiterSection> WaiterSections { get; set; } = new List<WaiterSection>();
 
-        public ICollection<WaiterOrder> WaiterOrders { get; set; } = new List<WaiterOrder>();
+        public ICollection<Order> OrdersAsWaiter { get; set; } = new List<Order>();
     }
 }

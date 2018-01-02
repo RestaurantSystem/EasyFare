@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ProductOrderListModel>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="row">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="col-xs-1">
+                    Product name
+                </th>
+                <th class="col-xs-1">
+                    ProductType
+                </th>
+                <th class="col-xs-1">
+                    WaiterName
+                </th>
+                <th class="col-xs-1">
+                    Order time
+                </th>
+                <th class="col-xs-1">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>
+                        @product.ProductName
+                    </td>
+                    <td>
+                        @product.ProductType
+                    </td>
+                    <td>
+                        @product.WaiterName
+                    </td>
+                    <td>
+                        @product.OrderTime
+                    </td>
+                    <td>
+                        <button id="btnShowModal" type="button"
+                                class="btn btn-success">
+                            Ready
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="loginModal"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    ×
+                </button>
+                <h4 class="modal-title">Set product ready</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input class="form-control" name="productId" id="productId" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="orderId" id="orderId" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary button button4">Ready</button>
+                <button type="button" id="btnHideModal" class="btn btn-primary button button4">
+                    Hide
+                </button>
+            </div>
+        </div>
+    </div>
+</div>  
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnShowModal").click(function () {
+                $("#loginModal").modal('show');
+            });
+
+            $("#btnHideModal").click(function () {
+                $("#loginModal").modal('hide');
+            });
+        });
+</script>  
+}

@@ -30,8 +30,6 @@
 
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
-        public DbSet<WaiterOrder> WaiterOrders { get; set; }
-
         public bool Any()
         {
             throw new NotImplementedException();
@@ -59,8 +57,6 @@
             builder.ApplyConfiguration(new OrderConfiguration());
 
             builder.ApplyConfiguration(new RecipeIngredientConfiguration());
-
-            builder.ApplyConfiguration(new WaiterOrderConfiguration());
 
             base.OnModelCreating(builder);
         }
