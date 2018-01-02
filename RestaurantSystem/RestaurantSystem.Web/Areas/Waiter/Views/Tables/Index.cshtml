@@ -16,11 +16,11 @@
                 string number = $"table{i}";
                 <li class="list-group-item">
                     <div>
-                        <a href="@table" data-toggle="collapse" class="btn btn-info"><span>@Model.ElementAt(i).Number</span></a>
+                        <a href="@table" data-toggle="collapse" class="btn btn-info" style="border-radius: 50%;">@Model.ElementAt(i).Number</a>
 
                         @if (User.IsInRole(WebConstants.WaiterRole))
                         {
-                            <a asp-area="Waiter" asp-controller="Tables" asp-action="Open" asp-route-number="@Model.ElementAt(i).Number" class="btn btn-primary" style="border-radius: 50%;">Open</a>
+                            <a asp-area="Waiter" asp-controller="Tables" asp-action="Open" asp-route-number="@Model.ElementAt(i).Number" class="btn btn-primary">Open</a>
 
                         }
                     </div>
