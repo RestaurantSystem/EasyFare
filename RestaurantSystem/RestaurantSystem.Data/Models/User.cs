@@ -13,5 +13,7 @@
         public decimal Salary { get; set; }
 
         public ICollection<WaiterSection> WaiterSections { get; set; } = new List<WaiterSection>();
+
+        public ICollection<WaiterOrder> WaiterOrders { get; set; } = new List<WaiterOrder>();
     }
 }

@@ -12,9 +12,10 @@ using System;
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    partial class RestaurantSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180102192238_ProductConfigurationUpdated")]
+    partial class ProductConfigurationUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,8 +210,6 @@ namespace RestaurantSystem.Data.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<bool>("IsReadyToServe");
-
                     b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
@@ -355,19 +354,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("RestaurantSystem.Data.Models.WaiterOrder", b =>
-                {
-                    b.Property<string>("WaiterId");
-
-                    b.Property<int>("OrderId");
-
-                    b.HasKey("WaiterId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("WaiterOrders");
-                });
-
             modelBuilder.Entity("RestaurantSystem.Data.Models.WaiterSection", b =>
                 {
                     b.Property<string>("WaiterId");
@@ -484,19 +470,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasOne("RestaurantSystem.Data.Models.Section", "Section")
                         .WithMany("Tables")
                         .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("RestaurantSystem.Data.Models.WaiterOrder", b =>
-                {
-                    b.HasOne("RestaurantSystem.Data.Models.Order", "Order")
-                        .WithMany("WaiterOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("RestaurantSystem.Data.Models.User", "Waiter")
-                        .WithMany("WaiterOrders")
-                        .HasForeignKey("WaiterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
