@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Areas\Manager\Models\Ingredients\" />
     <Folder Include="Areas\Manager\Views\Ingredients\" />
+    <Folder Include="Areas\Waiter\Models\" />
   </ItemGroup>
 
 </Project>

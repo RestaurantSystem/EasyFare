@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TablesListingServiceModel>
+@{
+    ViewData["Title"] = "All Tables";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-8">
+
+        <ul>
+
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                string table = $"#table{i}";
+                string number = $"table{i}";
+                <li class="list-group-item">
+                    <div>
+                        <a href="@table" data-toggle="collapse" class="btn btn-info"><span>@Model.ElementAt(i).Number</span></a>
+
+                        @if (User.IsInRole(WebConstants.WaiterRole))
+                        {
+                            <a asp-area="Waiter" asp-controller="Tables" asp-action="Open" asp-route-number="@Model.ElementAt(i).Number" class="btn btn-primary" style="border-radius: 50%;">Open</a>
+
+                        }
+                    </div>
+                    <div id="@number" class="collapse">
+                        <div>
+                            <small style="margin:5px">  seats: @Model.ElementAt(i).Seats section: @Model.ElementAt(i).Section</small>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
