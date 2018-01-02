@@ -193,7 +193,8 @@ namespace RestaurantSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("RecipeId")
                         .IsUnique()

@@ -8,7 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.HasAlternateKey(e => e.Name);
+            builder.HasIndex(e => e.Name).IsUnique();
 
             builder.HasOne(e => e.Recipe).WithOne(r => r.Product).HasForeignKey<Product>(p => p.RecipeId);
         }
