@@ -10,9 +10,7 @@
 
         Task<ProductsPaginationAndSearchModel> GetProducts(string search, int page);
 
-        Task<bool> DoesProductExistsAsync(string name);
-
-        Task EditAsync(int id, string name, decimal price, bool isCookable, ProductType type);
+        Task<bool> EditAsync(int id, string name, decimal price, bool isCookable, ProductType type, bool sameName);
 
         Task<ProductsListModel> FindByIdAsync(int id);
     }

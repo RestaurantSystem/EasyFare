@@ -1,5 +1,6 @@
 ﻿namespace RestaurantSystem.Services.Manager.Implementations
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
@@ -65,21 +66,30 @@
             };
         }
 
-        public async Task EditAsync(int id, string name, decimal price, bool isCookable, ProductType type)
+        public async Task<bool> EditAsync(int id, string name, decimal price, bool isCookable, ProductType type, bool sameName)
         {
-            Product exists = await this.db.Products.FindAsync(id);
+            Product product = await this.db.Products.FindAsync(id);
 
-            if (exists == null)
+            if (!sameName)
             {
-                return;
+                Product exists = await this.db.Products.FirstOrDefaultAsync(a => a.Name == name);
+                if (exists == null)
+                {
+                    product.Name = name;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            //exists.Name = name;
-            exists.Price = price;
-            exists.IsCookable = isCookable;
-            exists.Type = type;
+            product.Price = price;
+            product.IsCookable = isCookable;
+            product.Type = type;
 
             await this.db.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<ProductsListModel> FindByIdAsync(int id)
@@ -90,18 +100,6 @@
                .FirstOrDefaultAsync();
 
             return result;
-        }
-
-        public async Task<bool> DoesProductExistsAsync(string name)
-        {
-            Product product = await this.db.Products.FirstOrDefaultAsync(a => a.Name.ToLower() == name.ToLower());
-
-            if (product != null)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

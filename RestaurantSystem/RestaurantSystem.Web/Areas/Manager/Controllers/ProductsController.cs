@@ -103,7 +103,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return this.RedirectToAction(nameof(Edit));
+                return this.RedirectToAction(nameof(this.Edit));
             }
 
             var building = await this.products.FindByIdAsync(productModel.Id);
@@ -113,16 +113,22 @@
                 return this.NotFound();
             }
 
-            var found = await this.products.DoesProductExistsAsync(productModel.Name);
+            bool sameName = false;
 
-            if (found)
+            if (TempData["OldName"].ToString() == productModel.Name)
             {
-                TempData.AddErrorMessage($"The product {productModel.Name} already exists");
-                return this.RedirectToAction(nameof(All));
+                sameName = true;
             }
 
-            await this.products.EditAsync(productModel.Id, productModel.Name, productModel.Price, productModel.IsCookable, productModel.Type);
+            bool added = await this.products.EditAsync(productModel.Id, productModel.Name, productModel.Price, productModel.IsCookable, productModel.Type, sameName);
 
+            if (!added)
+            {
+                TempData.AddErrorMessage($"The product {productModel.Name} already exists.");
+                return this.RedirectToAction(nameof(this.All));
+            }
+
+            TempData.AddSuccessMessage($"The product {productModel.Name} added successfully.");
             return this.RedirectToAction(nameof(this.All));
         }
     }
