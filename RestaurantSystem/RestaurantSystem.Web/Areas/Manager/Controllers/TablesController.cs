@@ -33,7 +33,7 @@
 
             var tableExist = await this.tableService.TableAlreadyExist(tableModel.Number);
 
-            if (!tableExist)
+            if (tableExist)
             {
                 TempData.AddErrorMessage($"The table {tableModel.Number} already exists.");
                 return this.View(tableModel);

@@ -18,6 +18,11 @@
 
         public async Task<bool> AddNewTableAsync(string number, int seats, int sectionId)
         {
+            if (await TableAlreadyExist(number))
+            {
+                return false;
+            }
+
             var section = await this.db.Sections.FirstOrDefaultAsync(s => s.Id == sectionId);
 
             if (section == null)
@@ -40,9 +45,9 @@
 
         public async Task<bool> TableAlreadyExist(string number)
         {
-            var tableExist = await this.db.Tables.Select(t => t.Number == number).FirstOrDefaultAsync();
+            var table = await this.db.Tables.FirstOrDefaultAsync(t => t.Number.ToLower() == number.ToLower());
 
-            if (tableExist)
+            if (table == null)
             {
                 return false;
             }
