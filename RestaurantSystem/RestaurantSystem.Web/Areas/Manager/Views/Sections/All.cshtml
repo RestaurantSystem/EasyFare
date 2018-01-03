@@ -45,7 +45,12 @@
                     @zone.Name
                 </td>
                 <td>
-                    @zone.Tables.Count
+                    Table count - @(zone.Tables.Count + " | ")
+
+                    @foreach (var table in zone.Tables)
+                    {
+                        @("Table - " + table.Number + " Seats " + @table.Seats.ToString() + " ")
+                    }
                 </td>
                 <td>
                     @(zone.IsForSmokers ? "Yes" : "No")
