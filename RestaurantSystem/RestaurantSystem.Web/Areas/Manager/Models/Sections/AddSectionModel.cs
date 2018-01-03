@@ -1,4 +1,4 @@
-﻿namespace RestaurantSystem.Services.Manager.Models
+﻿namespace RestaurantSystem.Web.Areas.Manager.Models.Sections
 {
     using RestaurantSystem.Data.Infrastructure;
     using System.ComponentModel.DataAnnotations;

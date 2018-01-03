@@ -1,10 +1,10 @@
-﻿namespace RestaurantSystem.Data.Models
+﻿namespace RestaurantSystem.Web.Areas.Manager.Models.Tables
 {
+    using RestaurantSystem.Data.Infrastructure;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Infrastructure;
 
-    public class Table
+    public class AddTableModel
     {
         [Required]
         [StringLength(Constants.TableMaxNumberLength, ErrorMessage = Constants.TableNuberLengthErrorMessage, MinimumLength = Constants.TableMinNumberLength)]
@@ -14,13 +14,5 @@
         public int Seats { get; set; }
 
         public int SectionId { get; set; }
-
-        public Section Section { get; set; }
-
-        public int? OrderId { get; set; }
-
-        public Order Order { get; set; }
-
-        public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }

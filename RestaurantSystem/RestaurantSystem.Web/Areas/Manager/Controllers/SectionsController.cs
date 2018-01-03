@@ -9,6 +9,7 @@
     using RestaurantSystem.Web.Areas.Cook;
     using static WebConstants;
     using RestaurantSystem.Web.Infrastructure.Extensions;
+    using RestaurantSystem.Web.Areas.Manager.Models.Sections;
 
     public class SectionsController : ManagerBaseController
     {
