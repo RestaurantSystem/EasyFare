@@ -68,11 +68,11 @@
 
             if (!found)
             {
-                TempData.AddErrorMessage($"The section {sectionModel.Name} already exists.");
+                TempData.AddErrorMessage(string.Format(ManagerConstants.SectionAlreadyExist, sectionModel.Name)); 
                 return this.View(sectionModel);
             }
 
-            TempData.AddSuccessMessage($"The section {sectionModel.Name} added successfully.");
+            TempData.AddSuccessMessage(string.Format(ManagerConstants.SectionAddedSuccessfully, sectionModel.Name));
             return this.RedirectToAction(nameof(All));
         }
     }

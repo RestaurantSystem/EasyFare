@@ -35,7 +35,7 @@
 
             if (tableExist)
             {
-                TempData.AddErrorMessage($"The table {tableModel.Number} already exists.");
+                TempData.AddErrorMessage(string.Format(ManagerConstants.TableAlreadyExist, tableModel.Number));
                 return this.View(tableModel);
             }
 
@@ -43,11 +43,11 @@
 
             if (!found)
             {
-                TempData.AddErrorMessage($"This table {tableModel.Number} already exist in section");
+                TempData.AddErrorMessage(string.Format(ManagerConstants.TableExistInSection, tableModel.Number));
                 return this.View(tableModel);
             }
 
-            TempData.AddSuccessMessage($"The table {tableModel.Number} added successfully.");
+            TempData.AddSuccessMessage(string.Format(ManagerConstants.TableAddedSuccessfully, tableModel.Number));
             return this.RedirectToAction(nameof(SectionsController.All), "Sections");
         }
     }

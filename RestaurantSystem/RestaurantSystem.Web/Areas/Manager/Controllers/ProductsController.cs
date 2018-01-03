@@ -41,11 +41,11 @@
 
             if (!found)
             {
-                TempData.AddErrorMessage($"The product {productModel.Name} already exists.");
+                TempData.AddErrorMessage(string.Format(ManagerConstants.ProductAlreadyExist, productModel.Name));
                 return this.View();
             }
 
-            TempData.AddSuccessMessage($"The product {productModel.Name} added successfully.");
+            TempData.AddSuccessMessage(string.Format(ManagerConstants.ProductAddedSuccessfully, productModel.Name));
             return this.View();
         }
 
@@ -124,11 +124,11 @@
 
             if (!added)
             {
-                TempData.AddErrorMessage($"The product {productModel.Name} already exists.");
+                TempData.AddErrorMessage(string.Format(ManagerConstants.ProductAlreadyExist, productModel.Name));
                 return this.RedirectToAction(nameof(this.All));
             }
 
-            TempData.AddSuccessMessage($"The product {productModel.Name} added successfully.");
+            TempData.AddSuccessMessage(string.Format(ManagerConstants.ProductAddedSuccessfully, productModel.Name));
             return this.RedirectToAction(nameof(this.All));
         }
     }
