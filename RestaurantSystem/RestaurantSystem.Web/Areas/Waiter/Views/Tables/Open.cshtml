@@ -1,0 +1,44 @@
+﻿@model TableOpenedServiceModel
+@{
+    ViewData["Title"] = "Open";
+}
+
+<h2>Table @Model.Number</h2>
+
+<table class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <th>
+                Product
+            </th>
+
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.ListOfAllProducts)
+        {
+            <tr>
+                <th>
+                    @product.Name
+                </th>
+
+                <th>
+
+                    <form asp-area="Waiter" asp-controller="Tables" asp-action="AddProduct" method="post">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="hidden" name="ProductId" value="@product.Id" />
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-sm btn-success" value="Add" />
+                            </div>
+                        </div>
+                    </form>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
