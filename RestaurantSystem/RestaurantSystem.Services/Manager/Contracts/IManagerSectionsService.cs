@@ -5,6 +5,8 @@ namespace RestaurantSystem.Services.Manager.Contracts
 {
     public interface IManagerSectionsService
     {
-        Task<SectionsPaginationAndSearchModel> GetProducts(string search, int page);
+        Task<SectionsPaginationAndSearchModel> GetSections(string search, int page);
+
+        Task<bool> AddNewSectionAsync(string name, bool IsForSmokers);
     }
 }

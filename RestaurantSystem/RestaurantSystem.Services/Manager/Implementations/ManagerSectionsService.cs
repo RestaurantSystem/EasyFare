@@ -7,6 +7,7 @@
     using AutoMapper.QueryableExtensions;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using RestaurantSystem.Data.Models;
 
     public class ManagerSectionsService : IManagerSectionsService
     {
@@ -17,7 +18,28 @@
             this.db = db;
         }
 
-        public async Task<SectionsPaginationAndSearchModel> GetProducts(string search, int page)
+        public async Task<bool> AddNewSectionAsync(string name, bool IsForSmokers)
+        {
+            bool isExist = await this.db.Sections.Select(s => s.Name == name).FirstOrDefaultAsync();
+
+            if (isExist)
+            {
+                return false;
+            }
+
+            Section section = new Section()
+            {
+                Name = name,
+                IsForSmokers = IsForSmokers
+            };
+
+            await this.db.Sections.AddAsync(section);
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<SectionsPaginationAndSearchModel> GetSections(string search, int page)
         {
             SectionListModel[] sections = await this.db.Sections
                 .ProjectTo<SectionListModel>()

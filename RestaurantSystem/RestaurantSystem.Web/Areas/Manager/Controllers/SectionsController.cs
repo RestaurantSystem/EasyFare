@@ -8,6 +8,7 @@
     using RestaurantSystem.Services.Manager.Models;
     using RestaurantSystem.Web.Areas.Cook;
     using static WebConstants;
+    using RestaurantSystem.Web.Infrastructure.Extensions;
 
     public class SectionsController : ManagerBaseController
     {
@@ -30,7 +31,7 @@
                 page--;
             }
 
-            SectionsPaginationAndSearchModel sections = await this.sections.GetProducts(search, page);
+            SectionsPaginationAndSearchModel sections = await this.sections.GetSections(search, page);
 
             sections.TotalPages = (int)Math.Ceiling(((double)sections.ItemsCount / CookConstants.IngredientsPerPage));
 
@@ -47,6 +48,31 @@
                 .ToList();
 
             return this.View(sections);
+        }
+
+        public IActionResult Add()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddSectionModel sectionModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(sectionModel);
+            }
+
+            bool found = await this.sections.AddNewSectionAsync(sectionModel.Name, sectionModel.IsForSmokers);
+
+            if (!found)
+            {
+                TempData.AddErrorMessage($"The section {sectionModel.Name} already exists.");
+                return this.View(sectionModel);
+            }
+
+            TempData.AddSuccessMessage($"The section {sectionModel.Name} added successfully.");
+            return this.RedirectToAction(nameof(All));
         }
     }
 }

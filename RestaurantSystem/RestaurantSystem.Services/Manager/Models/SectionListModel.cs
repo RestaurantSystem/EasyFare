@@ -10,8 +10,6 @@
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(Constants.SectionNameMaxLength, ErrorMessage = Constants.SectionNameLengthErrorMessage, MinimumLength = Constants.SectionNameMinLength)]
         public string Name { get; set; }
 
         public bool IsForSmokers { get; set; }
