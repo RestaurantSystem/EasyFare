@@ -5,6 +5,19 @@
 
 <h2>Table @Model.Number</h2>
 
+<div class="col-md-6">
+
+    @{string searchWord = Model.SearchWord;}
+    @if (searchWord == null)
+    {
+        searchWord = "";
+    }
+
+    <form method="post" asp-area="Waiter" asp-controller="Tables" asp-action="Open" asp-route-number="@Model.Number" asp-route-searchWord="@searchWord">
+        <input type="text" id="searchWord" name="searchWord" />
+        <input type="submit" class="btn btn-primary" value="Search" />
+    </form>
+</div>
 <table class="table table-bordered table-hover">
 
     <thead>
@@ -27,7 +40,7 @@
 
                 <th>
 
-                    <form asp-area="Waiter" asp-controller="Tables" asp-action="AddProduct" method="post">
+                    <form asp-area="Waiter" asp-controller="Products" asp-action="Add" method="post">
                         <div class="row">
                             <div class="col-md-8">
                                 <input type="hidden" name="ProductId" value="@product.Id" />

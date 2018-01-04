@@ -24,10 +24,10 @@
         public async Task<IActionResult> Index()
         => View(await this.tables.AllAsync());
 
-        public async Task<IActionResult> Open(string number)
+        public async Task<IActionResult> Open(string number, string searchWord = "")
         {
             var waiterId = this.users.GetUserId(User);
-            var result = await this.tables.OpenTable(number, waiterId);
+            var result = await this.tables.OpenTable(number, waiterId, searchWord);
             if (result == null)
             {
                 return NotFound();

@@ -7,6 +7,7 @@
     using RestaurantSystem.Services.Waiter.Contracts;
     using RestaurantSystem.Services.Waiter.Models.Tables;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class TablesService : ITablesService
@@ -23,21 +24,30 @@
             .ProjectTo<TablesListingServiceModel>()
             .ToListAsync();
 
-        public async Task<TableOpenedServiceModel> OpenTable(string number, string waiterId)
+        public async Task<TableOpenedServiceModel> OpenTable(string number, string waiterId, string searchWord)
         {
             var table = await this.db.Tables.SingleOrDefaultAsync(t => t.Number == number);
             if (table == null)
             {
                 return null;
             }
+            var products = await this.db.Products
+                .ProjectTo<ProductListModel>()
+                .ToListAsync();
+            if (!string.IsNullOrEmpty(searchWord))
+            {
+                products = await this.db.Products
+               .Where(p => p.Name.ToLower().Contains(searchWord.ToLower()))
+               .ProjectTo<ProductListModel>()
+               .ToListAsync();
+            }
 
             var result = new TableOpenedServiceModel
             {
                 Number = number,
                 WaiterId = waiterId,
-                ListOfAllProducts = await this.db.Products
-                .ProjectTo<ProductListModel>()
-                .ToListAsync()
+                ListOfAllProducts = products,
+                SearchWord = searchWord
             };
 
             return result;
