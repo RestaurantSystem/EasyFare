@@ -40,10 +40,11 @@
 
                 <th>
 
-                    <form asp-area="Waiter" asp-controller="Products" asp-action="Add" method="post">
+                    <form asp-area="Waiter" asp-controller="Products" asp-action="AddToTable" method="post">
                         <div class="row">
                             <div class="col-md-8">
                                 <input type="hidden" name="ProductId" value="@product.Id" />
+                                <input type="hidden" name="TableNumber" value="@Model.Number" />
                             </div>
                             <div class="col-md-4">
                                 <input type="submit" class="btn btn-sm btn-success" value="Add" />
