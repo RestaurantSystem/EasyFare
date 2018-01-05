@@ -8,12 +8,10 @@
     {
         public string Number { get; set; }
 
-        public string WaiterId { get; set; }
-
         public string SearchWord { get; set; }
 
-        public IEnumerable<ProductListModel> ListOfAllProducts { get; set; }
+        public IEnumerable<ProductListModel> Products { get; set; }
 
-        public IEnumerable<Product> CurrentListOfProducts { get; set; } = new List<Product>();
+        public IEnumerable<Product> ProductsOnTable { get; set; }
     }
 }

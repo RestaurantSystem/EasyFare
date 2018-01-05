@@ -24,7 +24,7 @@
             .ProjectTo<TablesListingServiceModel>()
             .ToListAsync();
 
-        public async Task<TableOpenedServiceModel> OpenTable(string number, string waiterId, string searchWord)
+        public async Task<TableOpenedServiceModel> OpenTable(string number, string searchWord)
         {
             var table = await this.db.Tables.SingleOrDefaultAsync(t => t.Number == number);
             if (table == null)
@@ -42,14 +42,15 @@
                .ToListAsync();
             }
 
-            var currentProducts = table.ProductsOnTable;
+            var currentProducts = await this.db.Products
+                .Where(p => p.TableNumber == table.Number)
+                .ToListAsync();
 
             var result = new TableOpenedServiceModel
             {
                 Number = number,
-                WaiterId = waiterId,
-                ListOfAllProducts = products,
-                CurrentListOfProducts = currentProducts,
+                Products = products,
+                ProductsOnTable = currentProducts,
                 SearchWord = searchWord
             };
 

@@ -24,6 +24,10 @@
 
         public Recipe Recipe { get; set; }
 
+        public string TableNumber { get; set; }
+
+        public Table Table { get; set; }
+
         public ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
 
         public ICollection<TableProduct> Tables { get; set; } = new List<TableProduct>();

@@ -29,6 +29,8 @@
 
         public DbSet<Recipe> Recipes { get; set; }
 
+        public DbSet<TableProduct> TableProducts { get; set; }
+
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public Task First { get; set; }
 

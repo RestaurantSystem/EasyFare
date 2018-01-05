@@ -27,7 +27,7 @@
         public async Task<IActionResult> Open(string number, string searchWord = "")
         {
             var waiterId = this.users.GetUserId(User);
-            var result = await this.tables.OpenTable(number, waiterId, searchWord);
+            var result = await this.tables.OpenTable(number, searchWord);
             if (result == null)
             {
                 return NotFound();
