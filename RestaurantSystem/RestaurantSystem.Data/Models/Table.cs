@@ -10,6 +10,7 @@
         [StringLength(Constants.TableMaxNumberLength, ErrorMessage = Constants.TableNuberLengthErrorMessage, MinimumLength = Constants.TableMinNumberLength)]
         public string Number { get; set; }
 
+        [Required]
         [Range(Constants.TableMinSeats, Constants.TableMaxSeats)]
         public int Seats { get; set; }
 

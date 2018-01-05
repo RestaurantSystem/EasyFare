@@ -7,9 +7,9 @@
     using RestaurantSystem.Services.Manager.Contracts;
     using RestaurantSystem.Services.Manager.Models;
     using RestaurantSystem.Web.Areas.Cook;
-    using static WebConstants;
-    using RestaurantSystem.Web.Infrastructure.Extensions;
     using RestaurantSystem.Web.Areas.Manager.Models.Sections;
+    using RestaurantSystem.Web.Infrastructure.Extensions;
+    using static WebConstants;
 
     public class SectionsController : ManagerBaseController
     {
@@ -68,7 +68,7 @@
 
             if (!found)
             {
-                TempData.AddErrorMessage(string.Format(ManagerConstants.SectionAlreadyExist, sectionModel.Name)); 
+                TempData.AddErrorMessage(string.Format(ManagerConstants.SectionAlreadyExist, sectionModel.Name));
                 return this.View(sectionModel);
             }
 

@@ -17,8 +17,7 @@
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
 
-        public UsersController(IManagerUserService users,
-            RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public UsersController(IManagerUserService users, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             this.users = users;
             this.roleManager = roleManager;
@@ -38,7 +37,7 @@
                 })
                 .ToListAsync();
 
-            return View(new ManagerUsersViewModel
+            return this.View(new ManagerUsersViewModel
             {
                 Users = users,
                 Roles = roles
@@ -74,7 +73,7 @@
 
             TempData.AddSuccessMessage($"User {user.UserName} successfully added to role {model.Role}!");
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }

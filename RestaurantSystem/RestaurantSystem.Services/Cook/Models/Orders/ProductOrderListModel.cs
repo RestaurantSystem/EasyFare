@@ -1,10 +1,10 @@
 ﻿namespace RestaurantSystem.Services.Cook.Models.Orders
 {
+    using System;
+    using AutoMapper;
     using RestaurantSystem.Common.Mapping;
     using RestaurantSystem.Data.Infrastructure.Enumerations;
     using RestaurantSystem.Data.Models;
-    using System;
-    using AutoMapper;
 
     public class ProductOrderListModel : IMapFrom<ProductOrder>, IHaveCustomMapping
     {

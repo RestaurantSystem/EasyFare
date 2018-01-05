@@ -1,6 +1,7 @@
 ﻿namespace RestaurantSystem.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using RestaurantSystem.Data.Infrastructure;
 
     public class RecipeIngredient
     {
@@ -12,7 +13,7 @@
 
         public Ingredient Ingredient { get; set; }
 
-        [Range(0.01, double.MaxValue)]
+        [Range(Constants.RecipeIngredientMinQuantity, Constants.RecipeIngredientMaxQuantity)]
         public double Quantity { get; set; }
     }
 }

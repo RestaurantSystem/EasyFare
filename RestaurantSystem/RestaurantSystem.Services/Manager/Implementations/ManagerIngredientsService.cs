@@ -21,7 +21,7 @@
         public async Task<IngredientsPaginationAndSearchModel> GetIngredients(string search, int page)
         {
             IngredientListModel[] ingredients = await this.db.Ingredients
-                .Where(i => i.MinStockQuantityTreshold >= i.QuantityInStock)
+                .Where(i => i.MinStockQuantityThreshold >= i.QuantityInStock)
                 .ProjectTo<IngredientListModel>()
                 .OrderBy(i => i.Name)
                 .ToArrayAsync();

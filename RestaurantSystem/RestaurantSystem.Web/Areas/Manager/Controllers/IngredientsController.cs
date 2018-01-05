@@ -24,6 +24,7 @@
             {
                 page++;
             }
+
             if (direction == PageBackward && page > 1)
             {
                 page--;

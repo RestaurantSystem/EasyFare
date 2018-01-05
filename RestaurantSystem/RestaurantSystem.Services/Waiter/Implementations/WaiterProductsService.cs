@@ -1,11 +1,11 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
+    using System;
+    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Waiter.Contracts;
-    using System;
-    using System.Threading.Tasks;
 
     public class WaiterProductsService : IWaiterProductsService
     {
@@ -25,6 +25,7 @@
             {
                 return false;
             }
+
             var order = new Order
             {
                 WaiterId = waiterId,

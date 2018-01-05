@@ -1,10 +1,8 @@
 ﻿namespace RestaurantSystem.Services.Manager.Models
 {
-    using RestaurantSystem.Common.Mapping;
-    using RestaurantSystem.Data.Infrastructure;
-    using RestaurantSystem.Data.Models;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using RestaurantSystem.Common.Mapping;
+    using RestaurantSystem.Data.Models;
 
     public class SectionListModel : IMapFrom<Section>
     {

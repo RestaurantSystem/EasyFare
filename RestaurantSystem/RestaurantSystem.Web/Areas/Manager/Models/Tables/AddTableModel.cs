@@ -1,8 +1,7 @@
 ﻿namespace RestaurantSystem.Web.Areas.Manager.Models.Tables
 {
-    using RestaurantSystem.Data.Infrastructure;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using RestaurantSystem.Data.Infrastructure;
 
     public class AddTableModel
     {
@@ -10,6 +9,7 @@
         [StringLength(Constants.TableMaxNumberLength, ErrorMessage = Constants.TableNuberLengthErrorMessage, MinimumLength = Constants.TableMinNumberLength)]
         public string Number { get; set; }
 
+        [Required]
         [Range(Constants.TableMinSeats, Constants.TableMaxSeats)]
         public int Seats { get; set; }
 

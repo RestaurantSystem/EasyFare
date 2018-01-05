@@ -20,16 +20,18 @@
             this.db = db;
         }
 
-        public async Task<bool> Create(string name, float quantityInStock, float minStockQuantityTreshold)
+        public async Task<bool> Create(string name, float quantityInStock, float minStockQuantityThreshold)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException(Constants.IngredientNameErrorMessage);
             }
-            if (quantityInStock < 0 || minStockQuantityTreshold < 0)
+
+            if (quantityInStock < 0 || minStockQuantityThreshold < 0)
             {
                 throw new ArgumentException(Constants.IngredientQuantityErrorMessage);
             }
+
             if (this.db.Ingredients.Any(i => i.Name == name))
             {
                 return false;
@@ -39,7 +41,7 @@
             {
                 Name = name,
                 QuantityInStock = quantityInStock,
-                MinStockQuantityTreshold = minStockQuantityTreshold
+                MinStockQuantityThreshold = minStockQuantityThreshold
             });
 
             await this.db.SaveChangesAsync();
@@ -47,20 +49,23 @@
             return true;
         }
 
-        public async Task<bool?> Edit(int id, string name, float minStockQuantityTreshold)
+        public async Task<bool?> Edit(int id, string name, float minStockQuantityThreshold)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException(Constants.IngredientNameErrorMessage);
             }
-            if (minStockQuantityTreshold < 0)
+
+            if (minStockQuantityThreshold < 0)
             {
                 throw new ArgumentException(Constants.IngredientQuantityErrorMessage);
             }
+
             if (!this.db.Ingredients.Any(i => i.Id == id))
             {
                 return null;
             }
+
             if (this.db.Ingredients.Any(i => i.Id != id && i.Name == name))
             {
                 return false;
@@ -69,7 +74,7 @@
             Ingredient ingredient = await this.db.Ingredients.FindAsync(id);
 
             ingredient.Name = name;
-            ingredient.MinStockQuantityTreshold = minStockQuantityTreshold;
+            ingredient.MinStockQuantityThreshold = minStockQuantityThreshold;
 
             await this.db.SaveChangesAsync();
 

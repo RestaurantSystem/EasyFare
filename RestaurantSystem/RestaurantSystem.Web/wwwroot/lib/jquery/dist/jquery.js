@@ -9451,5 +9451,3 @@ if ( !noGlobal ) {
 
 return jQuery;
     }));
-
- 

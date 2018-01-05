@@ -222,8 +222,9 @@
                     this.logger.LogInformation("User created a new account with password.");
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    //await this.emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    // var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    // await this.emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await this.signInManager.SignInAsync(user, isPersistent: false);
                     this.logger.LogInformation("User created a new account with password.");
@@ -232,8 +233,7 @@
 
                 this.AddErrors(result);
             }
-
-            // If we got this far, something failed, redisplay form
+            
             return this.View(model);
         }
 
@@ -372,8 +372,9 @@
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await this.userManager.GeneratePasswordResetTokenAsync(user);
-                //var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-                //await this.emailSender.SendEmailAsync(model.Email, "Reset Password", $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
+                // var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+                // await this.emailSender.SendEmailAsync(model.Email, "Reset Password", $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 return this.RedirectToAction(nameof(this.ForgotPasswordConfirmation));
             }
 

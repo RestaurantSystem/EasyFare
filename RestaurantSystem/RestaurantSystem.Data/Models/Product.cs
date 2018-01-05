@@ -13,7 +13,8 @@
         [StringLength(Constants.ProductNameMaxLength, ErrorMessage = Constants.ProductNameLengthErrorMessage, MinimumLength = Constants.ProductNameMinLength)]
         public string Name { get; set; }
 
-        [Range(0, double.MaxValue)]
+        [Required]
+        [Range(Constants.ProductMinPrice, Constants.ProductMaxPrice)]
         public decimal Price { get; set; }
 
         public bool IsCookable { get; set; }

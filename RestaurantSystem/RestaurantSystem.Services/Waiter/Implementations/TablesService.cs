@@ -1,14 +1,14 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Services.Cook.Models.Products;
     using RestaurantSystem.Services.Waiter.Contracts;
     using RestaurantSystem.Services.Waiter.Models.Tables;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class TablesService : ITablesService
     {
@@ -31,6 +31,7 @@
             {
                 return null;
             }
+
             var products = await this.db.Products
                 .ProjectTo<ProductListModel>()
                 .ToListAsync();

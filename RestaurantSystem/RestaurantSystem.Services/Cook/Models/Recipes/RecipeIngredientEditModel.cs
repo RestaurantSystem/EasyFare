@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using AutoMapper;
     using RestaurantSystem.Common.Mapping;
+    using RestaurantSystem.Data.Infrastructure;
     using RestaurantSystem.Data.Models;
 
     public class RecipeIngredientEditModel : IMapFrom<RecipeIngredient>, IHaveCustomMapping
@@ -13,7 +14,7 @@
 
         public string IngredientName { get; set; }
 
-        [Range(0.01, double.MaxValue)]
+        [Range(Constants.RecipeIngredientMinQuantity, Constants.RecipeIngredientMaxQuantity)]
         public double Quantity { get; set; }
 
         public void ConfigureMapping(Profile mapper)

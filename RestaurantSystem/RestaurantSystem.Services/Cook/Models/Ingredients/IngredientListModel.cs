@@ -14,7 +14,7 @@
 
         public float QuantityInStock { get; set; }
 
-        public float MinStockQuantityTreshold { get; set; }
+        public float MinStockQuantityThreshold { get; set; }
 
         public int UsedInProductsCount { get; set; }
 

@@ -14,8 +14,8 @@
         [Display(Name = "Ingredient name")]
         public string Name { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Minimum treshold cannot be negative.")]
-        [Display(Name = "Minimum stock quantity treshold")]
-        public float MinStockQuantityTreshold { get; set; }
+        [Range(Constants.IngredientMinStockQuantityThreshold, Constants.IngredientMaxStockQuantityThreshold, ErrorMessage = "Minimum threshold cannot be negative.")]
+        [Display(Name = "Minimum stock quantity threshold")]
+        public float MinStockQuantityThreshold { get; set; }
     }
 }

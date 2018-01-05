@@ -1,12 +1,12 @@
 ﻿namespace RestaurantSystem.Web.Areas.Waiter.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Waiter.Contracts;
     using RestaurantSystem.Web.Infrastructure.Extensions;
-    using System.Threading.Tasks;
     using static WebConstants;
 
     [Area(WaiterRole)]
@@ -40,11 +40,10 @@
             {
                 return NotFound();
             }
-            
 
             TempData.AddSuccessMessage($"{product.Name} successfully added to table {tableNumber}!");
 
-            return RedirectToAction("Open", "Tables", new {number = tableNumber });
+            return RedirectToAction("Open", "Tables", new { number = tableNumber });
         }
     }
 }
