@@ -1,10 +1,10 @@
 ﻿namespace RestaurantSystem.Web.Areas.Manager.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantSystem.Services.Manager.Contracts;
     using RestaurantSystem.Web.Areas.Manager.Models.Tables;
     using RestaurantSystem.Web.Infrastructure.Extensions;
-    using System.Threading.Tasks;
 
     public class TablesController : ManagerBaseController
     {

@@ -1,7 +1,7 @@
 ﻿namespace RestaurantSystem.Web.Areas.Manager.Models.Sections
 {
-    using RestaurantSystem.Data.Infrastructure;
     using System.ComponentModel.DataAnnotations;
+    using RestaurantSystem.Data.Infrastructure;
 
     public class AddSectionModel
     {

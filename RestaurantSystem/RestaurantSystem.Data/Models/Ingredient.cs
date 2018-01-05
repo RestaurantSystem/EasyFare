@@ -16,11 +16,13 @@
         [NotMapped]
         public bool InStock => this.QuantityInStock > 0;
 
-        [Range(0, double.MaxValue)]
+        [Required]
+        [Range(Constants.IngredientMinQuantityInStock, Constants.IngredientMaxQuantityInStock)]
         public float QuantityInStock { get; set; }
 
-        [Range(0, double.MaxValue)]
-        public float MinStockQuantityTreshold { get; set; }
+        [Required]
+        [Range(Constants.IngredientMinStockQuantityThreshold, Constants.IngredientMaxStockQuantityThreshold)]
+        public float MinStockQuantityThreshold { get; set; }
 
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
     }

@@ -1,8 +1,8 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Models.Tables
 {
+    using System.Collections.Generic;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Cook.Models.Products;
-    using System.Collections.Generic;
 
     public class TableOpenedServiceModel
     {

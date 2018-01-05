@@ -1,11 +1,10 @@
 ﻿namespace RestaurantSystem.Services.Manager.Implementations
 {
     using System.Threading.Tasks;
-    using RestaurantSystem.Services.Manager.Contracts;
-    using RestaurantSystem.Data;
-    using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
+    using RestaurantSystem.Services.Manager.Contracts;
 
     public class ManagerTableService : IManagerTableService
     {
@@ -18,7 +17,7 @@
 
         public async Task<bool> AddNewTableAsync(string number, int seats, int sectionId)
         {
-            if (await TableAlreadyExist(number))
+            if (await this.TableAlreadyExist(number))
             {
                 return false;
             }

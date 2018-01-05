@@ -115,9 +115,10 @@
             }
 
             var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-            //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-            //var email = user.Email;
-            //await this.emailSender.SendEmailConfirmationAsync(email, callbackUrl);
+
+            // var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+            // var email = user.Email;
+            // await this.emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
             this.StatusMessage = "Verification email sent. Please check your email.";
             return this.RedirectToAction(nameof(this.Index));

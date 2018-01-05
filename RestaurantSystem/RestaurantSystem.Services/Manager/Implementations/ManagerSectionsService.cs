@@ -1,13 +1,13 @@
 ﻿namespace RestaurantSystem.Services.Manager.Implementations
 {
+    using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper.QueryableExtensions;
+    using Microsoft.EntityFrameworkCore;
+    using RestaurantSystem.Data;
+    using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Manager.Contracts;
     using RestaurantSystem.Services.Manager.Models;
-    using RestaurantSystem.Data;
-    using AutoMapper.QueryableExtensions;
-    using System.Linq;
-    using Microsoft.EntityFrameworkCore;
-    using RestaurantSystem.Data.Models;
 
     public class ManagerSectionsService : IManagerSectionsService
     {
@@ -18,7 +18,7 @@
             this.db = db;
         }
 
-        public async Task<bool> AddNewSectionAsync(string name, bool IsForSmokers)
+        public async Task<bool> AddNewSectionAsync(string name, bool isForSmokers)
         {
             bool isExist = await this.db.Sections.Select(s => s.Name == name).FirstOrDefaultAsync();
 
@@ -30,7 +30,7 @@
             Section section = new Section()
             {
                 Name = name,
-                IsForSmokers = IsForSmokers
+                IsForSmokers = isForSmokers
             };
 
             await this.db.Sections.AddAsync(section);

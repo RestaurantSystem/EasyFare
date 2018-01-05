@@ -1,12 +1,12 @@
-﻿using RestaurantSystem.Services.Manager.Models;
-using System.Threading.Tasks;
-
-namespace RestaurantSystem.Services.Manager.Contracts
+﻿namespace RestaurantSystem.Services.Manager.Contracts
 {
+    using System.Threading.Tasks;
+    using RestaurantSystem.Services.Manager.Models;
+
     public interface IManagerSectionsService
     {
         Task<SectionsPaginationAndSearchModel> GetSections(string search, int page);
 
-        Task<bool> AddNewSectionAsync(string name, bool IsForSmokers);
+        Task<bool> AddNewSectionAsync(string name, bool isForSmokers);
     }
 }

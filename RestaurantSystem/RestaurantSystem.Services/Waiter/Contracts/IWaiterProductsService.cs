@@ -1,7 +1,7 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Contracts
 {
-    using RestaurantSystem.Data.Models;
     using System.Threading.Tasks;
+    using RestaurantSystem.Data.Models;
 
     public interface IWaiterProductsService
     {

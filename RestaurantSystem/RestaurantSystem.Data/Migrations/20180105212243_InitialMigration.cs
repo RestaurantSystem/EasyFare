@@ -4,7 +4,7 @@
     using Microsoft.EntityFrameworkCore.Metadata;
     using Microsoft.EntityFrameworkCore.Migrations;
 
-    public partial class InicialiWithFix : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,6 @@
                     Id = table.Column<string>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     LockoutEnabled = table.Column<bool>(nullable: false),
@@ -40,10 +39,10 @@
                     PasswordHash = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    Salary = table.Column<decimal>(nullable: false),
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Salary = table.Column<decimal>(nullable: false)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,13 +67,13 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    MinStockQuantityThreshold = table.Column<float>(nullable: false),
                     Name = table.Column<string>(maxLength: 150, nullable: false),
                     QuantityInStock = table.Column<float>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.Id);
-                    table.UniqueConstraint("AK_Ingredients_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,7 +216,9 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BillId = table.Column<int>(nullable: false)
+                    BillId = table.Column<int>(nullable: true),
+                    OrderTime = table.Column<DateTime>(nullable: false),
+                    WaiterId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,29 +228,13 @@
                         column: x => x.BillId,
                         principalTable: "Bills",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 150, nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    RecipeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.UniqueConstraint("AK_Products_Name", x => x.Name);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Products_Recipes_RecipeId",
-                        column: x => x.RecipeId,
-                        principalTable: "Recipes",
+                        name: "FK_Orders_AspNetUsers_WaiterId",
+                        column: x => x.WaiterId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,7 +291,7 @@
                 columns: table => new
                 {
                     Number = table.Column<string>(maxLength: 3, nullable: false),
-                    OrderId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: true),
                     Seats = table.Column<int>(nullable: false),
                     SectionId = table.Column<int>(nullable: false)
                 },
@@ -318,7 +303,7 @@
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tables_Sections_SectionId",
                         column: x => x.SectionId,
@@ -328,27 +313,33 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOrders",
+                name: "Products",
                 columns: table => new
                 {
-                    ProductId = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsCookable = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(maxLength: 150, nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    RecipeId = table.Column<int>(nullable: true),
+                    TableNumber = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrders", x => new { x.ProductId, x.OrderId });
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
+                        name: "FK_Products_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Products_Tables_TableNumber",
+                        column: x => x.TableNumber,
+                        principalTable: "Tables",
+                        principalColumn: "Number",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -369,6 +360,55 @@
                         principalTable: "Tables",
                         principalColumn: "Number",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductOrders",
+                columns: table => new
+                {
+                    ProductId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: false),
+                    IsReadyToServe = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductOrders", x => new { x.ProductId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_ProductOrders_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductOrders_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TableProduct",
+                columns: table => new
+                {
+                    TableNumber = table.Column<string>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TableProduct", x => new { x.TableNumber, x.ProductId });
+                    table.ForeignKey(
+                        name: "FK_TableProduct_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TableProduct_Tables_TableNumber",
+                        column: x => x.TableNumber,
+                        principalTable: "Tables",
+                        principalColumn: "Number",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -411,9 +451,20 @@
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Ingredients_Name",
+                table: "Ingredients",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_BillId",
                 table: "Orders",
                 column: "BillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_WaiterId",
+                table: "Orders",
+                column: "WaiterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductOrders_OrderId",
@@ -421,10 +472,22 @@
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_Name",
+                table: "Products",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_RecipeId",
                 table: "Products",
                 column: "RecipeId",
-                unique: true);
+                unique: true,
+                filter: "[RecipeId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_TableNumber",
+                table: "Products",
+                column: "TableNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeIngredients_IngredientId",
@@ -435,6 +498,11 @@
                 name: "IX_Reservations_TableNumber",
                 table: "Reservations",
                 column: "TableNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TableProduct_ProductId",
+                table: "TableProduct",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tables_OrderId",
@@ -479,25 +547,25 @@
                 name: "Reservations");
 
             migrationBuilder.DropTable(
+                name: "TableProduct");
+
+            migrationBuilder.DropTable(
                 name: "WaiterSections");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Tables");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Recipes");
+
+            migrationBuilder.DropTable(
+                name: "Tables");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -507,6 +575,9 @@
 
             migrationBuilder.DropTable(
                 name: "Bills");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

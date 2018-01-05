@@ -15,7 +15,7 @@
         [Range(1, int.MaxValue, ErrorMessage = "Ingredient is required.")]
         public int IngredientId { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "Quantity must be greater than 0.01.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Quantity must be greater than 0.01.")] // TODOTODO: constants
         public double Quantity { get; set; }
 
         public IEnumerable<IngredientDropDownListModel> Ingredients { get; set; } = new List<IngredientDropDownListModel>();

@@ -27,6 +27,7 @@
             {
                 page++;
             }
+
             if (direction == PageBackward && page > 1)
             {
                 page--;
@@ -62,7 +63,7 @@
                 return this.View(ingredientModel);
             }
 
-            bool isSuccessfullyCreated = await this.ingredients.Create(ingredientModel.Name, ingredientModel.QuantityInStock, ingredientModel.MinStockQuantityTreshold);
+            bool isSuccessfullyCreated = await this.ingredients.Create(ingredientModel.Name, ingredientModel.QuantityInStock, ingredientModel.MinStockQuantityThreshold);
 
             if (isSuccessfullyCreated)
             {
@@ -98,7 +99,7 @@
                 return this.View(ingredientModel);
             }
 
-            bool? isSuccessfullyEdited = await this.ingredients.Edit(ingredientModel.Id, ingredientModel.Name, ingredientModel.MinStockQuantityTreshold);
+            bool? isSuccessfullyEdited = await this.ingredients.Edit(ingredientModel.Id, ingredientModel.Name, ingredientModel.MinStockQuantityThreshold);
 
             if (isSuccessfullyEdited == null)
             {
