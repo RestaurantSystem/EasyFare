@@ -22,5 +22,9 @@
         public Order Order { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+        public ICollection<TableProduct> Products { get; set; } = new List<TableProduct>();
+
+        public ICollection<Product> ProductsOnTable { get; set; } = new List<Product>();
     }
 }

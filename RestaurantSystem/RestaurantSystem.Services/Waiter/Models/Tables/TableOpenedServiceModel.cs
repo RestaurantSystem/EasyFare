@@ -1,5 +1,6 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Models.Tables
 {
+    using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Cook.Models.Products;
     using System.Collections.Generic;
 
@@ -13,6 +14,6 @@
 
         public IEnumerable<ProductListModel> ListOfAllProducts { get; set; }
 
-        public IEnumerable<ProductListModel> CurrentListOfProducts { get; set; } = new List<ProductListModel>();
+        public IEnumerable<Product> CurrentListOfProducts { get; set; } = new List<Product>();
     }
 }

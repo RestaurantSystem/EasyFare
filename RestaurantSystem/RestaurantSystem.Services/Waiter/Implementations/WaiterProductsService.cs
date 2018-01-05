@@ -40,6 +40,10 @@
             };
             table.Order = order;
 
+            var product = await this.db.Products.SingleOrDefaultAsync(p => p.Id == productId);
+
+            table.ProductsOnTable.Add(product);
+
             order.ProductOrders.Add(productOrder);
 
             this.db.Orders.Add(order);

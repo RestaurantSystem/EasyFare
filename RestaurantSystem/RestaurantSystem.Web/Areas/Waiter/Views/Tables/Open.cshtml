@@ -8,51 +8,91 @@
 <div class="col-md-6">
 
     @{string searchWord = Model.SearchWord;}
-    @if (searchWord == null)
-    {
-        searchWord = "";
-    }
 
     <form method="post" asp-area="Waiter" asp-controller="Tables" asp-action="Open" asp-route-number="@Model.Number" asp-route-searchWord="@searchWord">
         <input type="text" id="searchWord" name="searchWord" />
         <input type="submit" class="btn btn-primary" value="Search" />
     </form>
 </div>
-<table class="table table-bordered table-hover">
+<div class="row">
+    <div class="col-md-4">
+        <table class="table table-bordered table-hover">
 
-    <thead>
-        <tr>
-            <th>
-                Product
-            </th>
+            <thead>
+                <tr>
+                    <th>
+                        Product
+                    </th>
 
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model.ListOfAllProducts)
-        {
-            <tr>
-                <th>
-                    @product.Name
-                </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.ListOfAllProducts)
+            {
+                    <tr>
+                        <th>
+                            @product.Name
+                        </th>
 
-                <th>
+                        <th>
 
-                    <form asp-area="Waiter" asp-controller="Products" asp-action="AddToTable" method="post">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <input type="hidden" name="ProductId" value="@product.Id" />
-                                <input type="hidden" name="TableNumber" value="@Model.Number" />
-                            </div>
-                            <div class="col-md-4">
-                                <input type="submit" class="btn btn-sm btn-success" value="Add" />
-                            </div>
-                        </div>
-                    </form>
-                </th>
-            </tr>
-        }
-    </tbody>
-</table>
+                            <form asp-area="Waiter" asp-controller="Products" asp-action="AddToTable" method="post">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input type="hidden" name="ProductId" value="@product.Id" />
+                                        <input type="hidden" name="TableNumber" value="@Model.Number" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="submit" class="btn btn-sm btn-success" value="Add" />
+                                    </div>
+                                </div>
+                            </form>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-bordered table-hover">
+
+            <thead>
+                <tr>
+                    <th>
+                        Products on table
+                    </th>
+
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.CurrentListOfProducts)
+            {
+                    <tr>
+                        <th>
+                            @product.Name
+                        </th>
+
+                        <th>
+
+                            <form asp-area="Waiter" asp-controller="Products" asp-action="Remove" method="post">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input type="hidden" name="ProductId" value="@product.Id" />
+                                        <input type="hidden" name="TableNumber" value="@Model.Number" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="submit" class="btn btn-sm btn-danger" value="Remove" />
+                                    </div>
+                                </div>
+                            </form>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

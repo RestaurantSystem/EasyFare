@@ -42,11 +42,14 @@
                .ToListAsync();
             }
 
+            var currentProducts = table.ProductsOnTable;
+
             var result = new TableOpenedServiceModel
             {
                 Number = number,
                 WaiterId = waiterId,
                 ListOfAllProducts = products,
+                CurrentListOfProducts = currentProducts,
                 SearchWord = searchWord
             };
 

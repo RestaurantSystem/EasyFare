@@ -1,11 +1,11 @@
 ﻿namespace RestaurantSystem.Data
 {
-    using System;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data.Configuration;
     using RestaurantSystem.Data.Models;
+    using System;
+    using System.Threading.Tasks;
 
     public class RestaurantSystemDbContext : IdentityDbContext<User>
     {
@@ -59,6 +59,8 @@
             builder.ApplyConfiguration(new OrderConfiguration());
 
             builder.ApplyConfiguration(new RecipeIngredientConfiguration());
+
+            builder.ApplyConfiguration(new TableProductConfiguration());
 
             base.OnModelCreating(builder);
         }

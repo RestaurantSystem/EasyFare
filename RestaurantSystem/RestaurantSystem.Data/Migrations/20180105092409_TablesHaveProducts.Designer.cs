@@ -12,9 +12,10 @@ using System;
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    partial class RestaurantSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180105092409_TablesHaveProducts")]
+    partial class TablesHaveProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,8 +196,6 @@ namespace RestaurantSystem.Data.Migrations
 
                     b.Property<int?>("RecipeId");
 
-                    b.Property<string>("TableNumber");
-
                     b.Property<int>("Type");
 
                     b.HasKey("Id");
@@ -207,8 +206,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasIndex("RecipeId")
                         .IsUnique()
                         .HasFilter("[RecipeId] IS NOT NULL");
-
-                    b.HasIndex("TableNumber");
 
                     b.ToTable("Products");
                 });
@@ -452,10 +449,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasOne("RestaurantSystem.Data.Models.Recipe", "Recipe")
                         .WithOne("Product")
                         .HasForeignKey("RestaurantSystem.Data.Models.Product", "RecipeId");
-
-                    b.HasOne("RestaurantSystem.Data.Models.Table")
-                        .WithMany("ProductsOnTable")
-                        .HasForeignKey("TableNumber");
                 });
 
             modelBuilder.Entity("RestaurantSystem.Data.Models.ProductOrder", b =>
