@@ -31,9 +31,9 @@
                 return this.View(tableModel);
             }
 
-            var tableExist = await this.tableService.TableAlreadyExist(tableModel.Number);
+            //var tableExist = await this.tableService.TableAlreadyExist(tableModel.Number);
 
-            if (tableExist)
+            if (await DoesTheTableExist(tableModel.Number))
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.TableAlreadyExist, tableModel.Number));
                 return this.View(tableModel);
@@ -49,6 +49,54 @@
 
             TempData.AddSuccessMessage(string.Format(ManagerConstants.TableAddedSuccessfully, tableModel.Number));
             return this.RedirectToAction(nameof(SectionsController.All), "Sections");
+        }
+
+        public IActionResult RemoveTable(string tableName)
+        {
+            return this.View(new RemoveTableModel
+            {
+                Number = tableName
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveTable(RemoveTableModel tableModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(tableModel);
+            }
+
+            //var tableExist = await this.tableService.TableAlreadyExist(tableModel.Number);
+
+            if (!await DoesTheTableExist(tableModel.Number))
+            {
+                TempData.AddErrorMessage(string.Format(ManagerConstants.TableDoesntExist, tableModel.Number));
+                return this.View(tableModel);
+            }
+
+            bool found = await this.tableService.RemoveTableAsync(tableModel.Number, tableModel.SectionId);
+
+            if (!found)
+            {
+                TempData.AddErrorMessage(string.Format(ManagerConstants.TableDoesntExist, tableModel.Number));
+                return this.View(tableModel);
+            }
+
+            TempData.AddSuccessMessage(string.Format(ManagerConstants.TableRemovedSuccessfully, tableModel.Number));
+            return this.RedirectToAction(nameof(SectionsController.All), "Sections");
+        }
+
+        private async Task<bool> DoesTheTableExist(string tableNumber)
+        {
+            var tableExist = await this.tableService.TableAlreadyExist(tableNumber);
+
+            if (tableExist)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

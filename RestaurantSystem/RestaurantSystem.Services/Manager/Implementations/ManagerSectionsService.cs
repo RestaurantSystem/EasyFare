@@ -20,9 +20,9 @@
 
         public async Task<bool> AddNewSectionAsync(string name, bool isForSmokers)
         {
-            bool isExist = await this.db.Sections.Select(s => s.Name == name).FirstOrDefaultAsync();
+            var sectionExist = await this.db.Sections.FirstOrDefaultAsync(s => s.Name.Equals(name));
 
-            if (isExist)
+            if (sectionExist != null)
             {
                 return false;
             }
