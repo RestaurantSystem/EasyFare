@@ -1,14 +1,14 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Services.Cook.Models.Products;
     using RestaurantSystem.Services.Waiter.Contracts;
     using RestaurantSystem.Services.Waiter.Models.Tables;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class TablesService : ITablesService
     {
@@ -43,15 +43,13 @@
                .ToListAsync();
             }
 
-            var currentProducts = await this.db.Products
-                .Where(p => p.TableNumber == table.Number)
-                .ToListAsync();
+            var tableOrder = this.db.Orders.SingleOrDefault(o => o.Id == table.OrderId);
 
+            table.Order = tableOrder;
             var result = new TableOpenedServiceModel
             {
                 Number = number,
                 Products = products,
-                ProductsOnTable = currentProducts,
                 SearchWord = searchWord
             };
 
