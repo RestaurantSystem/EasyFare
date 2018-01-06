@@ -18,7 +18,7 @@
 
         public void ConfigureMapping(Profile mapper)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

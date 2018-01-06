@@ -15,5 +15,10 @@
         public const string ProductAlreadyExist = "The product {0} already exists.";
 
         public const string ProductAddedSuccessfully = "The product {0} added successfully.";
+
+        public const string TableDoesntExist = "The table {0} doesn't exist in the current section.";
+
+        public const string TableRemovedSuccessfully = "The table {0} successfully removed.";
+
     }
 }

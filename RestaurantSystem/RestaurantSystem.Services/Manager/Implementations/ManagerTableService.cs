@@ -42,6 +42,26 @@
             return true;
         }
 
+        public async Task<bool> RemoveTableAsync(string number, int sectionId)
+        {
+            if (!await TableAlreadyExist(number))
+            {
+                return false;
+            }
+
+            var table = await this.db.Tables.FirstOrDefaultAsync(s => s.Number == number && s.SectionId == sectionId);
+
+            if (table == null)
+            {
+                return false;
+            }
+
+            this.db.Tables.Remove(table);
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<bool> TableAlreadyExist(string number)
         {
             var table = await this.db.Tables.FirstOrDefaultAsync(t => t.Number.ToLower() == number.ToLower());
