@@ -29,8 +29,6 @@
 
         public DbSet<Recipe> Recipes { get; set; }
 
-        public DbSet<TableProduct> TableProducts { get; set; }
-
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
         public Task First { get; set; }
@@ -62,8 +60,6 @@
             builder.ApplyConfiguration(new OrderConfiguration());
 
             builder.ApplyConfiguration(new RecipeIngredientConfiguration());
-
-            builder.ApplyConfiguration(new TableProductConfiguration());
 
             base.OnModelCreating(builder);
         }
