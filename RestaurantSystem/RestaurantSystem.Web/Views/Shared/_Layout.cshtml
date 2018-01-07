@@ -37,7 +37,7 @@
                         <li><a asp-area="Manager" asp-controller="Ingredients" asp-action="All"><span class="navbarText">All ingredients</span></a></li>
                         <li><a asp-area="Manager" asp-controller="Sections" asp-action="All"><span class="navbarText">All Sections</span></a></li>
                     }
-                    @if (User.IsInRole(WebConstants.CookRole))
+                    else if (User.IsInRole(WebConstants.CookRole))
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,6 +54,10 @@
                                 </div>
                             </div>
                         </li>
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Users" asp-action="AllTables"><span class="navbarText">Tables</span></a></li>
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
