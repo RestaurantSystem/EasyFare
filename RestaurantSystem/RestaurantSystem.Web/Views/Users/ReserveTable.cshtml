@@ -1,0 +1,55 @@
+﻿@model TableServiceModel
+@{
+    var timeDate = new DateTime(2000, 1, 1, 9, 0, 0);
+    var date = new DateTime();
+    ViewData["Title"] = "Table";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Number"></label>
+                <input readonly asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Seats"></label>
+                <input readonly asp-for="Seats" class="form-control" />
+                <span asp-validation-for="Seats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    <label asp-for="Date"></label>
+                    <input asp-for="Date" class="form-control" value="@DateTime.UtcNow.AddMinutes(5)" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+            @*<div class="form-group">
+                <label asp-for="Date"></label>
+                <select name="DatePick">
+                    @for (int i = 0; i < 30; i++)
+                    {
+                        <option selected="selected" value="@DateTime.UtcNow.AddDays(i).ToString("dd/MM/yyyy")">@DateTime.UtcNow.AddDays(i).ToString("dd/MM/yyyy")</option>
+                    }
+                </select>
+                <select name="TimePick">
+                    @for (int i = 0; i < 25; i++)
+                    {
+                        <option value="@timeDate.AddMinutes(30*i).ToString("HH:mm")">@timeDate.AddMinutes(30 * i).ToString("HH:mm")</option>
+                    }
+                </select>
+                <input hidden asp-for="Date" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+                <input type="datetime" id="asd"/>
+            </div>*@
+            <button type="submit" class="btn btn-default">Reserve</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

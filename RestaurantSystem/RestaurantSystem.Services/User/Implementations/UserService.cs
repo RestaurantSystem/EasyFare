@@ -20,6 +20,15 @@
             this.db = db;
         }
 
+        public async Task<TableServiceModel> GetTableAsync(string number)
+        {
+            var table = await this.db.Tables
+                .ProjectTo<TableServiceModel>()
+                .FirstOrDefaultAsync(a => a.Number == number);
+
+            return table;
+        }
+
         public async Task<TablesPaginationAndSearchModel> GetTables(string search, int page)
         {
             TablesListModel[] tables = await this.db.Tables
@@ -43,14 +52,36 @@
             };
         }
 
-        public async Task<bool> ReserveTableAsync(string id)
+        public async Task<bool> ReserveTableAsync(string id, DateTime date)
         {
             Table table = await this.db.Tables.FirstOrDefaultAsync(a => a.Number == id);
+            table.Reservations = this.db.Reservations.Where(a => a.TableNumber == id).ToList();
 
+            var reservationDate = date.AddMinutes(45);
             if (table == null)
             {
                 return false;
             }
+
+            if (reservationDate <= DateTime.UtcNow)
+            {
+                return false;
+            }
+
+            if (table.Reservations.Any(a => a.StartTime.AddMinutes(45) >= reservationDate && a.StartTime.AddMinutes(45) <= reservationDate))
+            {
+                return false;
+            }
+
+            Reservation reservation = new Reservation()
+            {
+                StartTime = date,
+                Table = table,
+                TableNumber = table.Number
+            };
+
+            await this.db.Reservations.AddAsync(reservation);
+            await this.db.SaveChangesAsync();
 
             return true;
         }

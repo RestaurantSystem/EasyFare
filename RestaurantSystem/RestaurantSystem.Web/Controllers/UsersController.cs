@@ -9,6 +9,7 @@
     using RestaurantSystem.Web.Areas.Cook;
     using RestaurantSystem.Services.User.Models;
     using static WebConstants;
+    using RestaurantSystem.Web.Infrastructure.Extensions;
 
     public class UsersController : Controller
     {
@@ -48,6 +49,33 @@
                 .ToList();
 
             return this.View(tables);
+        }
+
+        public async Task<IActionResult> ReserveTable(string number)
+        {
+            var table = await this.userService.GetTableAsync(number);
+
+            return this.View(table);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReserveTable(TableServiceModel tableModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(tableModel);
+            }
+
+            bool success = await this.userService.ReserveTableAsync(tableModel.Number, tableModel.Date);
+
+            if (!success)
+            {
+                TempData.AddErrorMessage("This date is taken.");
+                return this.View();
+            }
+
+            TempData.AddSuccessMessage("Reservation is complete");
+            return this.View();
         }
     }
 }

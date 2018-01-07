@@ -10,6 +10,8 @@
     {
         Task<TablesPaginationAndSearchModel> GetTables(string search, int page);
 
-        Task<bool> ReserveTableAsync(string id);
+        Task<TableServiceModel> GetTableAsync(string number);
+
+        Task<bool> ReserveTableAsync(string id, DateTime date);
     }
 }
