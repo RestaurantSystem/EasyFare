@@ -57,7 +57,7 @@
             Table table = await this.db.Tables.FirstOrDefaultAsync(a => a.Number == id);
             table.Reservations = this.db.Reservations.Where(a => a.TableNumber == id).ToList();
 
-            var reservationDate = date.AddMinutes(45);
+            var reservationDate = date;
             if (table == null)
             {
                 return false;
@@ -68,7 +68,7 @@
                 return false;
             }
 
-            if (table.Reservations.Any(a => a.StartTime.AddMinutes(45) >= reservationDate && a.StartTime.AddMinutes(45) <= reservationDate))
+            if (table.Reservations.Any(a => a.StartTime.AddMinutes(45) > reservationDate && a.StartTime < reservationDate.AddMinutes(45)))
             {
                 return false;
             }
