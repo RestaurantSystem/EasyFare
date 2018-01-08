@@ -12,9 +12,10 @@ using System;
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    partial class RestaurantSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180108192926_CascadeDeleteOnReservatioNWhenDelete")]
+    partial class CascadeDeleteOnReservatioNWhenDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,8 +134,6 @@ namespace RestaurantSystem.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Amount");
 
                     b.HasKey("Id");
 
