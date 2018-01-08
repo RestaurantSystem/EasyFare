@@ -73,6 +73,7 @@
                 //var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
                 var productsToList = table.CurrentProducts.Select(p => new ProductWithQuantityServiceModel
                 {
+                    Id = p.Id,
                     Name = p.Name,
                     Quantity = this.db.ProductOrders.Where(o=>o.OrderId==table.OrderId&&o.ProductId==p.Id)
                     .FirstOrDefault().Quantity,

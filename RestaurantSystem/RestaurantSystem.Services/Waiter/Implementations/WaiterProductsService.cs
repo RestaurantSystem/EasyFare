@@ -49,7 +49,6 @@
                 if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
                 {
                     po.Quantity = 1;
-                    
                 }
                 else
                 {
@@ -71,8 +70,7 @@
                     ProductId = productId,
                     OrderId = (int)table.OrderId
                 };
-               
-                
+
                 if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
                 {
                     po.Quantity = 1;
@@ -105,6 +103,36 @@
             }
 
             return product;
+        }
+
+        public async Task<bool> Remove(string tableNumber, int productId)
+        {
+            Table table = await this.db.Tables.SingleOrDefaultAsync(t => t.Number == tableNumber);
+
+            if (table == null)
+            {
+                return false;
+            }
+            ProductOrder productOrder = await this.db.ProductOrders
+                .SingleOrDefaultAsync(po => po.OrderId == table.OrderId && po.ProductId == productId);
+
+            if (productOrder == null)
+            {
+                return false;
+            }
+
+            if (productOrder.Quantity == 1)
+            {
+                this.db.ProductOrders.Remove(productOrder);
+                await this.db.SaveChangesAsync();
+            }
+            else
+            {
+                productOrder.Quantity--;
+                await this.db.SaveChangesAsync();
+            }
+
+            return true;
         }
     }
 }

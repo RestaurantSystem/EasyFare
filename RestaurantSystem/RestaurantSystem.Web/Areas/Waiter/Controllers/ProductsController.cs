@@ -45,5 +45,26 @@
 
             return RedirectToAction("Open", "Tables", new { number = tableNumber });
         }
+
+        public async Task<IActionResult> Remove(string tableNumber, int productId)
+        {
+            var product = await this.products.GetById(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var success = await this.products.Remove(tableNumber, productId);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            TempData.AddSuccessMessage($"{product.Name} successfully removed from table {tableNumber}!");
+
+            return RedirectToAction("Open", "Tables", new { number = tableNumber });
+        }
     }
 }

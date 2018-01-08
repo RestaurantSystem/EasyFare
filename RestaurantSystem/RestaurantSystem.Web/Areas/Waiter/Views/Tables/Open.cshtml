@@ -105,7 +105,7 @@
                                 <form asp-area="Waiter" asp-controller="Products" asp-action="Remove" method="post">
 
 
-                                    <input type="hidden" name="ProductId" value="######" />
+                                    <input type="hidden" name="ProductId" value="@product.Id" />
                                     <input type="hidden" name="TableNumber" value="@Model.Number" />
 
 
