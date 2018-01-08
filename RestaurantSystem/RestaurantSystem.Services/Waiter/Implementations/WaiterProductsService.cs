@@ -5,6 +5,7 @@
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Waiter.Contracts;
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class WaiterProductsService : IWaiterProductsService
@@ -25,31 +26,64 @@
             {
                 return false;
             }
-
-            var order = new Order
+            Product product = await this.db.Products.SingleOrDefaultAsync(p => p.Id == productId);
+            if (table.OrderId == null)
             {
-                WaiterId = waiterId,
-                OrderTime = DateTime.Now,
-            };
+                Order order = new Order
+                {
+                    OrderTime = DateTime.Now,
+                    WaiterId = waiterId,
+                };
 
-            order.Tables.Add(table);
+                this.db.Add(order);
+                table.OrderId = order.Id;
+                await this.db.SaveChangesAsync();
 
-            var productOrder = new ProductOrder
+                ProductOrder po = new ProductOrder
+                {
+                    ProductId = productId,
+                    OrderId = order.Id
+                };
+                if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
+                {
+                    po.Quantity = 1;
+                    this.db.Add(po);
+                }
+                else
+                {
+                    po.Quantity++;
+                }
+
+                await this.db.SaveChangesAsync();
+
+                order.Tables.Add(table);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+            else
             {
-                ProductId = productId,
-                OrderId = order.Id
-            };
-            table.Order = order;
+                ProductOrder po = new ProductOrder
+                {
+                    ProductId = productId,
+                    OrderId = (int)table.OrderId
+                };
+                if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
+                {
+                    po.Quantity = 1;
+                    this.db.Add(po);
+                }
+                else
+                {
+                    po.Quantity++;
+                }
 
-            var product = await this.db.Products.SingleOrDefaultAsync(p => p.Id == productId);
+                await this.db.SaveChangesAsync();
+                Order order = await this.db.Orders.SingleOrDefaultAsync(o => o.Id == table.OrderId);
 
-            order.ProductOrders.Add(productOrder);
-
-            this.db.Orders.Add(order);
-
-            await this.db.SaveChangesAsync();
-
-            return true;
+                order.Tables.Add(table);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
         }
 
         public async Task<Product> GetById(int id)

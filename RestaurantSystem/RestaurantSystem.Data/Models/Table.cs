@@ -3,6 +3,7 @@
     using Infrastructure;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Table
     {
@@ -23,6 +24,8 @@
         public Order Order { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+        public List<Product> CurrentProducts { get; set; } = new List<Product>();
 
     }
 }

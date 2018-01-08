@@ -11,5 +11,7 @@
         public Order Order { get; set; }
 
         public bool IsReadyToServe { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

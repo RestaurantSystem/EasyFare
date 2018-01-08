@@ -32,11 +32,11 @@
                 @foreach (var product in Model.Products)
             {
                     <tr>
-                        <th>
+                        <td>
                             @product.Name
-                        </th>
+                        </td>
 
-                        <th>
+                        <td>
 
                             <form asp-area="Waiter" asp-controller="Products" asp-action="AddToTable" method="post">
                                 <div class="row">
@@ -49,10 +49,67 @@
                                     </div>
                                 </div>
                             </form>
-                        </th>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
+
+
+        <div class="col-md-4">
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th>
+                            Products On Table
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.ProductsOnTable)
+            {
+                        <tr>
+                            <td>
+                                @product.Name
+                            </td>
+                            <td>
+                                @product.Quantity
+                            </td>
+                            <td>
+
+                            </td>
+
+                            <th>
+
+                                <form asp-area="Waiter" asp-controller="Products" asp-action="Remove" method="post">
+
+
+                                    <input type="hidden" name="ProductId" value="######" />
+                                    <input type="hidden" name="TableNumber" value="@Model.Number" />
+
+
+                                    <input type="submit" class="btn btn-sm btn-danger" value="Remove" />
+
+
+                                </form>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

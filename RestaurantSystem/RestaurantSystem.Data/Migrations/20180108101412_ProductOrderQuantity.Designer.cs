@@ -12,8 +12,8 @@ using System;
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    [Migration("20180106172743_ProductWitNoTable")]
-    partial class ProductWitNoTable
+    [Migration("20180108101412_ProductOrderQuantity")]
+    partial class ProductOrderQuantity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -196,6 +196,8 @@ namespace RestaurantSystem.Data.Migrations
 
                     b.Property<int?>("RecipeId");
 
+                    b.Property<string>("TableNumber");
+
                     b.Property<int>("Type");
 
                     b.HasKey("Id");
@@ -207,6 +209,8 @@ namespace RestaurantSystem.Data.Migrations
                         .IsUnique()
                         .HasFilter("[RecipeId] IS NOT NULL");
 
+                    b.HasIndex("TableNumber");
+
                     b.ToTable("Products");
                 });
 
@@ -217,6 +221,8 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<int>("OrderId");
 
                     b.Property<bool>("IsReadyToServe");
+
+                    b.Property<int>("Quantity");
 
                     b.HasKey("ProductId", "OrderId");
 
@@ -436,6 +442,10 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasOne("RestaurantSystem.Data.Models.Recipe", "Recipe")
                         .WithOne("Product")
                         .HasForeignKey("RestaurantSystem.Data.Models.Product", "RecipeId");
+
+                    b.HasOne("RestaurantSystem.Data.Models.Table")
+                        .WithMany("CurrentProducts")
+                        .HasForeignKey("TableNumber");
                 });
 
             modelBuilder.Entity("RestaurantSystem.Data.Models.ProductOrder", b =>

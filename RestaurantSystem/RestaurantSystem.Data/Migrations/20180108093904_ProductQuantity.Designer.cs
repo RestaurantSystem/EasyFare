@@ -12,8 +12,8 @@ using System;
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantSystemDbContext))]
-    [Migration("20180105215230_TableOrders")]
-    partial class TableOrders
+    [Migration("20180108093904_ProductQuantity")]
+    partial class ProductQuantity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -145,7 +145,7 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<float>("MinStockQuantityTreshold");
+                    b.Property<float>("MinStockQuantityThreshold");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -193,6 +193,8 @@ namespace RestaurantSystem.Data.Migrations
                         .HasMaxLength(150);
 
                     b.Property<decimal>("Price");
+
+                    b.Property<int>("Quantity");
 
                     b.Property<int?>("RecipeId");
 
@@ -309,19 +311,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasIndex("SectionId");
 
                     b.ToTable("Tables");
-                });
-
-            modelBuilder.Entity("RestaurantSystem.Data.Models.TableProduct", b =>
-                {
-                    b.Property<string>("TableNumber");
-
-                    b.Property<int>("ProductId");
-
-                    b.HasKey("TableNumber", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("TableProducts");
                 });
 
             modelBuilder.Entity("RestaurantSystem.Data.Models.User", b =>
@@ -454,8 +443,8 @@ namespace RestaurantSystem.Data.Migrations
                         .WithOne("Product")
                         .HasForeignKey("RestaurantSystem.Data.Models.Product", "RecipeId");
 
-                    b.HasOne("RestaurantSystem.Data.Models.Table", "Table")
-                        .WithMany("ProductsOnTable")
+                    b.HasOne("RestaurantSystem.Data.Models.Table")
+                        .WithMany("CurrentProducts")
                         .HasForeignKey("TableNumber");
                 });
 
@@ -501,19 +490,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasOne("RestaurantSystem.Data.Models.Section", "Section")
                         .WithMany("Tables")
                         .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("RestaurantSystem.Data.Models.TableProduct", b =>
-                {
-                    b.HasOne("RestaurantSystem.Data.Models.Product", "Product")
-                        .WithMany("Tables")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("RestaurantSystem.Data.Models.Table", "Table")
-                        .WithMany("Products")
-                        .HasForeignKey("TableNumber")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

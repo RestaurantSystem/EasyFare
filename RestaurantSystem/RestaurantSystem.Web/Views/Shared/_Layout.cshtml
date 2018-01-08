@@ -59,6 +59,10 @@
                     {
                         <li><a asp-area="" asp-controller="Users" asp-action="AllTables"><span class="navbarText">Tables</span></a></li>
                     }
+                     @if (User.IsInRole(WebConstants.WaiterRole))
+                    {
+                        <li><a asp-area="Waiter" asp-controller="Tables" asp-action="Index"><span class="navbarText">Go To Tables</span></a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

@@ -3,8 +3,10 @@
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
+    using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Cook.Models.Products;
     using RestaurantSystem.Services.Waiter.Contracts;
+    using RestaurantSystem.Services.Waiter.Models.Products;
     using RestaurantSystem.Services.Waiter.Models.Tables;
     using System.Collections.Generic;
     using System.Linq;
@@ -50,8 +52,35 @@
             {
                 Number = number,
                 Products = products,
-                SearchWord = searchWord
+                SearchWord = searchWord,
             };
+
+            if (tableOrder != null)
+            {
+                var productsIds = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId)
+                    .Select(p => p.ProductId);
+                foreach (var id in productsIds)
+                {
+                    Product product = this.db.Products.FirstOrDefault(p => p.Id == id);
+                    if (!table.CurrentProducts.Any(p => p.Name == product.Name))
+                    {
+                        table.CurrentProducts.Add(product);
+                        await this.db.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        await this.db.SaveChangesAsync();
+                    }
+                }
+                var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
+                var productsToList = table.CurrentProducts.Select(p => new ProductWithQuantityServiceModel
+                {
+                    Name = p.Name,
+                    Quantity = productOrder.Quantity
+                }).ToList();
+
+                result.ProductsOnTable = productsToList;
+            }
 
             return result;
         }
