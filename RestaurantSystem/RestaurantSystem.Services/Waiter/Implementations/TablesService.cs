@@ -120,6 +120,10 @@
 
         public async Task<bool> PrintCheck(string tableNumber)
         {
+            if (tableNumber == null)
+            {
+                return false;
+            }
             Table table = await this.db.Tables.SingleOrDefaultAsync(t => t.Number == tableNumber);
 
             if (table == null)
@@ -134,8 +138,27 @@
                 return false;
             }
 
-            this.db.RemoveRange(orders);
+            Order order = await this.db.Orders.SingleOrDefaultAsync(o => o.Id == table.OrderId);
+
+            Bill bill = new Bill();
+
+            foreach (var product in orders)
+            {
+                Product pr = this.db.Products.FirstOrDefault(p => p.Id == product.ProductId);
+               
+                bill.Amount += product.Quantity*(pr.Price);
+            }
+
+            this.db.Add(bill);
+
             await this.db.SaveChangesAsync();
+
+            order.BillId = bill.Id;
+
+            this.db.RemoveRange(orders);
+
+            await this.db.SaveChangesAsync();
+
             return true;
         }
     }

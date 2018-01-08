@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
+@inject UserManager<User> UserManager
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -62,7 +63,8 @@
                      @if (User.IsInRole(WebConstants.WaiterRole))
                     {
                         <li><a asp-area="Waiter" asp-controller="Tables" asp-action="Index"><span class="navbarText">Go To Tables</span></a></li>
-                    }
+                        <li><a asp-area="Waiter" asp-controller="Bills" asp-action="MyBills" asp-route-waiterId="@UserManager.GetUserId(User)"><span class="navbarText">My Bills</span></a></li>
+                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

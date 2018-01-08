@@ -39,6 +39,11 @@
 
         public async Task<IActionResult> GetCheck(string tableNumber)
         {
+            if (tableNumber == null)
+            {
+                return NotFound();
+            }
+
             var result = await this.tables.GetCheck(tableNumber);
 
             if (result == null)
@@ -52,6 +57,11 @@
         [HttpPost]
         public async Task<IActionResult> PrintCheck(string tableNumber)
         {
+            if (tableNumber == null)
+            {
+                return NotFound();
+            }
+
             var success = await this.tables.PrintCheck(tableNumber);
 
             if (!success)

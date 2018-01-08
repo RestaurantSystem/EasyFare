@@ -25,6 +25,10 @@
 
         public async Task<IActionResult> AddToTable(string tableNumber, int productId)
         {
+            if (tableNumber == null)
+            {
+                return NotFound();
+            }
             string waiterId = this.waiters.GetUserId(User);
 
             var product = await this.products.GetById(productId);
@@ -48,6 +52,11 @@
 
         public async Task<IActionResult> Remove(string tableNumber, int productId)
         {
+            if (tableNumber == null)
+            {
+                return NotFound();
+            }
+
             var product = await this.products.GetById(productId);
 
             if (product == null)

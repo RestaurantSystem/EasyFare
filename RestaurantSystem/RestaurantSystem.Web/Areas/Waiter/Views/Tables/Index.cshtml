@@ -14,7 +14,9 @@
             {
                 string table = $"#table{i}";
                 string number = $"table{i}";
-                <li class="list-group-item">
+                bool isEven = i % 2 == 0;
+                <li class="list-group-item text-center">
+	
                     <div>
                         <a href="@table" data-toggle="collapse" class="btn btn-info" style="border-radius: 50%;">@Model.ElementAt(i).Number</a>
 

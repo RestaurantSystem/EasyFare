@@ -1,5 +1,6 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
@@ -12,7 +13,7 @@
     {
         private readonly RestaurantSystemDbContext db;
 
-        public WaiterProductsService(RestaurantSystemDbContext db)
+        public WaiterProductsService(RestaurantSystemDbContext db, UserManager<User> waiters)
         {
             this.db = db;
         }
@@ -21,6 +22,8 @@
         {
             var table = await this.db.Tables
                 .SingleOrDefaultAsync(t => t.Number == tableNumber);
+
+            var waiter = this.db.Users.SingleOrDefault(u => u.Id == waiterId);
 
             if (table == null)
             {
@@ -35,6 +38,7 @@
                     WaiterId = waiterId,
                 };
 
+                waiter.OrdersAsWaiter.Add(order);
                 this.db.Add(order);
                 table.OrderId = order.Id;
                 await this.db.SaveChangesAsync();
@@ -107,6 +111,10 @@
 
         public async Task<bool> Remove(string tableNumber, int productId)
         {
+            if (tableNumber == null)
+            {
+                return false;
+            }
             Table table = await this.db.Tables.SingleOrDefaultAsync(t => t.Number == tableNumber);
 
             if (table == null)

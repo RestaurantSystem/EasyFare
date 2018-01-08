@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BillsListingServiceModel>
+@{
+    ViewData["Title"] = "MyBills";
+}
+
+<h2>MyBills</h2>
+
+<table class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <th>
+                Bill #
+            </th>
+
+            
+            <th>
+                Ammount
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bill in Model)
+            {
+            <tr>
+                <td>
+                    @bill.Id
+
+                </td>
+                <td>
+                    @bill.Amount
+                </td>
+
+
+              
+            </tr>
+        }
+        <tr>
+            <th>
+                Total Money
+            </th>
+            <td>
+                @Model.Sum(b => b.Amount)
+
+            </td>
+        </tr>
+   
+    </tbody>
+</table>
+
+
+

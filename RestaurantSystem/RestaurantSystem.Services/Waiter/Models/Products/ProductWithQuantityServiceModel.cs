@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RestaurantSystem.Services.Waiter.Models.Products
+﻿namespace RestaurantSystem.Services.Waiter.Models.Products
 {
-   public class ProductWithQuantityServiceModel
+    public class ProductWithQuantityServiceModel
     {
         public int Id { get; set; }
 
