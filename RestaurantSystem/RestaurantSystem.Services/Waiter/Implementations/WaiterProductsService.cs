@@ -44,14 +44,18 @@
                     ProductId = productId,
                     OrderId = order.Id
                 };
+                this.db.Add(po);
+                await this.db.SaveChangesAsync();
                 if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
                 {
                     po.Quantity = 1;
-                    this.db.Add(po);
+                    
                 }
                 else
                 {
-                    po.Quantity++;
+                    ProductOrder existing = this.db.ProductOrders.FirstOrDefault(p => p.ProductId == productId &&
+                    p.OrderId == table.OrderId);
+                    existing.Quantity++;
                 }
 
                 await this.db.SaveChangesAsync();
@@ -67,6 +71,8 @@
                     ProductId = productId,
                     OrderId = (int)table.OrderId
                 };
+               
+                
                 if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
                 {
                     po.Quantity = 1;
@@ -74,7 +80,9 @@
                 }
                 else
                 {
-                    po.Quantity++;
+                    ProductOrder existing = this.db.ProductOrders.FirstOrDefault(p => p.ProductId == productId &&
+                    p.OrderId == table.OrderId);
+                    existing.Quantity++;
                 }
 
                 await this.db.SaveChangesAsync();

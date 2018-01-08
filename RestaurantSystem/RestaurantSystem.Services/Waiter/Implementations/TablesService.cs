@@ -67,19 +67,18 @@
                         table.CurrentProducts.Add(product);
                         await this.db.SaveChangesAsync();
                     }
-                    else
-                    {
-                        await this.db.SaveChangesAsync();
-                    }
+
+                  
                 }
-                var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
+                //var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
                 var productsToList = table.CurrentProducts.Select(p => new ProductWithQuantityServiceModel
                 {
                     Name = p.Name,
-                    Quantity = productOrder.Quantity
+                    Quantity = this.db.ProductOrders.Where(o=>o.OrderId==table.OrderId&&o.ProductId==p.Id)
+                    .FirstOrDefault().Quantity
                 }).ToList();
-
                 result.ProductsOnTable = productsToList;
+
             }
 
             return result;
