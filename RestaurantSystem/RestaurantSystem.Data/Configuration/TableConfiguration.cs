@@ -14,7 +14,7 @@
 
             builder.HasOne(e => e.Order).WithMany(o => o.Tables).HasForeignKey(e => e.OrderId);
 
-            builder.HasMany(e => e.Reservations).WithOne(r => r.Table).HasForeignKey(r => r.TableNumber);
+            builder.HasMany(e => e.Reservations).WithOne(r => r.Table).HasForeignKey(r => r.TableNumber).OnDelete(DeleteBehavior.Cascade);
 
         }
     }
