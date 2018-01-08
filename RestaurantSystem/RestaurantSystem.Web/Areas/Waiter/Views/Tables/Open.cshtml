@@ -9,7 +9,7 @@
 
     @{string searchWord = Model.SearchWord;}
 
-   
+   <a asp-area="Waiter" asp-controller="Tables" asp-action ="Index" class="btn btn-warning">Tables</a>
 
 <div class="row">
     <div class="col-md-4">
@@ -125,6 +125,7 @@
                     </tr>
                 </tbody>
             </table>
+            <a asp-area="Waiter" asp-controller="Tables" asp-action="GetCheck" asp-route-tableNumber="@Model.Number" class="btn btn-danger">Print Bill</a>
         </div>
     </div>
     </div>

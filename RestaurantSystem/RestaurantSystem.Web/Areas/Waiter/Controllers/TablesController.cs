@@ -7,6 +7,7 @@
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Waiter.Contracts;
     using static WebConstants;
+    using RestaurantSystem.Web.Infrastructure.Extensions;
 
     [Area(WaiterRole)]
     [Authorize(Roles = WaiterArea)]
@@ -34,6 +35,33 @@
             }
 
             return View(result);
+        }
+
+        public async Task<IActionResult> GetCheck(string tableNumber)
+        {
+            var result = await this.tables.GetCheck(tableNumber);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PrintCheck(string tableNumber)
+        {
+            var success = await this.tables.PrintCheck(tableNumber);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            TempData.AddSuccessMessage($"Successfully printed bill of table {tableNumber}!");
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

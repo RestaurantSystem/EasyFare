@@ -128,7 +128,12 @@
             }
             else
             {
+
                 productOrder.Quantity--;
+                if (productOrder.Quantity < 0)
+                {
+                    productOrder.Quantity = 0;
+                }
                 await this.db.SaveChangesAsync();
             }
 

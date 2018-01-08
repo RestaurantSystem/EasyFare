@@ -1,0 +1,71 @@
+﻿@model TableCheckServiceModel
+@{
+    ViewData["Title"] = "Check";
+}
+
+<h2>Check</h2>
+
+<a asp-area="Waiter" asp-controller="Tables" asp-action="Index" class="btn btn-warning">Tables</a>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Products On Table</h2>
+        <table class="table table-bordered table-hover">
+
+            <thead>
+                <tr>
+                    <th>
+                        Products On Table
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+                    <th>
+                        Single Price
+                    </th>
+                    <th>
+                        Total Price
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.ProductsOnTable)
+            {
+                    <tr>
+                        <td>
+                            @product.Name
+                        </td>
+                        <td>
+                            @product.Quantity
+                        </td>
+                        <td>
+                            @product.SinglePrice
+                        </td>
+                        <td>
+                            @product.Price
+                        </td>
+                        <th>
+                        </th>
+                    </tr>
+
+                }
+                <tr>
+                    <th>Grand Total</th>
+                    <td colspan="3">
+                        @Model.ProductsOnTable.Sum(p => p.Price)
+                    </td>
+                    <td>
+                        <form asp-area="Waiter" asp-controller="Tables" asp-action="PrintCheck" asp-route-tableNumber="@Model.Number" method="post">
+                            <input type="submit" class="btn btn-sm btn-danger" value="Print" />
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
