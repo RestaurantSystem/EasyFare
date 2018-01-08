@@ -5,17 +5,19 @@
 
 <h2>Table @Model.Number</h2>
 
-<div class="col-md-6">
+
 
     @{string searchWord = Model.SearchWord;}
 
-    <form method="post" asp-area="Waiter" asp-controller="Tables" asp-action="Open" asp-route-number="@Model.Number" asp-route-searchWord="@searchWord">
-        <input type="text" id="searchWord" name="searchWord" />
-        <input type="submit" class="btn btn-primary" value="Search" />
-    </form>
-</div>
+   
+
 <div class="row">
     <div class="col-md-4">
+        <form method="post" asp-area="Waiter" asp-controller="Tables" asp-action="Open" asp-route-number="@Model.Number" asp-route-searchWord="@searchWord">
+            <input type="text" id="searchWord" name="searchWord" />
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </form>
+        <h2>All Products</h2>
         <table class="table table-bordered table-hover">
 
             <thead>
@@ -55,8 +57,10 @@
             </tbody>
         </table>
 
-
+    </div>
+    <div class="row">
         <div class="col-md-4">
+            <h2>Products On Table</h2>
             <table class="table table-bordered table-hover">
 
                 <thead>
@@ -70,9 +74,11 @@
                         </th>
 
                         <th>
-                            Price
+                            Single Price
                         </th>
-
+                        <th>
+                            Total Price
+                        </th>
                         <th>
                             Actions
                         </th>
@@ -89,9 +95,11 @@
                                 @product.Quantity
                             </td>
                             <td>
-
+                                @product.SinglePrice
                             </td>
-
+                            <td>
+                                @product.Price
+                            </td>
                             <th>
 
                                 <form asp-area="Waiter" asp-controller="Products" asp-action="Remove" method="post">
@@ -107,9 +115,16 @@
                                 </form>
                             </th>
                         </tr>
+                       
                     }
+                    <tr>
+                        <th>Grand Total</th>
+                        <td colspan="4">
+                            @Model.ProductsOnTable.Sum(p=>p.Price)
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+    </div>

@@ -75,8 +75,10 @@
                 {
                     Name = p.Name,
                     Quantity = this.db.ProductOrders.Where(o=>o.OrderId==table.OrderId&&o.ProductId==p.Id)
-                    .FirstOrDefault().Quantity
+                    .FirstOrDefault().Quantity,
+                    SinglePrice = p.Price
                 }).ToList();
+
                 result.ProductsOnTable = productsToList;
 
             }
