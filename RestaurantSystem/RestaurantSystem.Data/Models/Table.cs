@@ -1,9 +1,8 @@
 ﻿namespace RestaurantSystem.Data.Models
 {
-    using Infrastructure;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using Infrastructure;
 
     public class Table
     {
@@ -26,6 +25,5 @@
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
         public List<Product> CurrentProducts { get; set; } = new List<Product>();
-
     }
 }

@@ -27,53 +27,54 @@
         {
             if (tableNumber == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
+
             string waiterId = this.waiters.GetUserId(User);
 
             var product = await this.products.GetById(productId);
 
             if (product == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             var success = await this.products.AddToTable(tableNumber, productId, waiterId);
 
             if (!success)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             TempData.AddSuccessMessage($"{product.Name} successfully added to table {tableNumber}!");
 
-            return RedirectToAction("Open", "Tables", new { number = tableNumber });
+            return this.RedirectToAction("Open", "Tables", new { number = tableNumber });
         }
 
         public async Task<IActionResult> Remove(string tableNumber, int productId)
         {
             if (tableNumber == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             var product = await this.products.GetById(productId);
 
             if (product == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             var success = await this.products.Remove(tableNumber, productId);
 
             if (!success)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             TempData.AddSuccessMessage($"{product.Name} successfully removed from table {tableNumber}!");
 
-            return RedirectToAction("Open", "Tables", new { number = tableNumber });
+            return this.RedirectToAction("Open", "Tables", new { number = tableNumber });
         }
     }
 }

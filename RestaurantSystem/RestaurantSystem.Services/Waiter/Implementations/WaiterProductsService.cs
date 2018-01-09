@@ -1,13 +1,13 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Waiter.Contracts;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class WaiterProductsService : IWaiterProductsService
     {
@@ -136,7 +136,6 @@
             }
             else
             {
-
                 productOrder.Quantity--;
                 if (productOrder.Quantity < 0)
                 {

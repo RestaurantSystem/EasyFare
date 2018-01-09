@@ -1,5 +1,8 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
@@ -8,9 +11,6 @@
     using RestaurantSystem.Services.Waiter.Contracts;
     using RestaurantSystem.Services.Waiter.Models.Products;
     using RestaurantSystem.Services.Waiter.Models.Tables;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class TablesService : ITablesService
     {
@@ -54,7 +54,6 @@
                     Name = p.Name,
                     SinglePrice = p.Price,
                 }).ToList(),
-
             };
 
             return result;
@@ -93,15 +92,13 @@
             {
                 var productsIds = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId)
                     .Select(p => p.ProductId);
+
                 foreach (var id in productsIds)
                 {
                     Product product = this.db.Products.FirstOrDefault(p => p.Id == id);
-                    if (!table.CurrentProducts.Any(p => p.Name == product.Name))
-                    {
-                        table.CurrentProducts.Add(product);
-                        await this.db.SaveChangesAsync();
-                    }
                 }
+
+                await this.db.SaveChangesAsync();
                 //var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
                 var productsToList = table.CurrentProducts.Select(p => new ProductWithQuantityServiceModel
                 {
@@ -145,8 +142,8 @@
             foreach (var product in orders)
             {
                 Product pr = this.db.Products.FirstOrDefault(p => p.Id == product.ProductId);
-               
-                bill.Amount += product.Quantity*(pr.Price);
+
+                bill.Amount += product.Quantity * (pr.Price);
             }
 
             this.db.Add(bill);
