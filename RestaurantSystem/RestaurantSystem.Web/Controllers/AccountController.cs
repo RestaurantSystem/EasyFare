@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Web.Models.AccountViewModels;
 
@@ -45,7 +46,7 @@
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             this.ViewData["ReturnUrl"] = returnUrl;
@@ -53,32 +54,44 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
+
+
                 var result = await this.signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await userManager.FindByNameAsync(model.Username);
+                    var roles = await userManager.GetRolesAsync(user);
+                    roles.Add(model.Username);
                     this.logger.LogInformation("User logged in.");
-                    return this.RedirectToLocal(returnUrl);
+                    var userName = JsonConvert.SerializeObject(roles);
+                    Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
+                    return this.Ok(userName);
                 }
 
                 if (result.RequiresTwoFactor)
                 {
+                    Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
                     return this.RedirectToAction(nameof(this.LoginWith2fa), new { returnUrl, model.RememberMe });
                 }
 
                 if (result.IsLockedOut)
                 {
                     this.logger.LogWarning("User account locked out.");
-                    return this.RedirectToAction(nameof(this.Lockout));
+                    Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
+                    return this.Ok(Json("error"));
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return this.View(model);
+                    Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
+                    return this.Ok(Json("error"));
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return this.View(model);
+            Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
+            return this.Ok(Json("error"));
         }
 
         [HttpGet]

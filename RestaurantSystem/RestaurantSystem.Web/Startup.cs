@@ -40,6 +40,8 @@
 
             services.AddDomainServices();
 
+            services.AddCors();
+
             services.AddMvc(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
@@ -64,6 +66,11 @@
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+            );
 
             app.UseMvc(routes =>
             {
