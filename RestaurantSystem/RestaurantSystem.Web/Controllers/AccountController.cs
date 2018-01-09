@@ -209,7 +209,7 @@
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             this.ViewData["ReturnUrl"] = returnUrl;
@@ -228,13 +228,13 @@
 
                     await this.signInManager.SignInAsync(user, isPersistent: false);
                     this.logger.LogInformation("User created a new account with password.");
-                    return this.RedirectToLocal(returnUrl);
+                    return this.Ok(user);
                 }
 
                 this.AddErrors(result);
             }
             
-            return this.View(model);
+            return this.Ok(model);
         }
 
         [HttpPost]
