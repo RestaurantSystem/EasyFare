@@ -10,6 +10,7 @@
     using RestaurantSystem.Web.Areas.Manager.Models.Sections;
     using RestaurantSystem.Web.Infrastructure.Extensions;
     using static WebConstants;
+    using Newtonsoft.Json;
 
     public class SectionsController : ManagerBaseController
     {
@@ -48,7 +49,15 @@
                 .Take(CookConstants.IngredientsPerPage)
                 .ToList();
 
-            return this.View(sections);
+
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            var sectionsJson = JsonConvert.SerializeObject(sections, settings);
+
+            return this.Json(sectionsJson);
         }
 
         public IActionResult Add()
@@ -61,7 +70,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return this.View(sectionModel);
+                return this.Ok(sectionModel);
             }
 
             bool found = await this.sections.AddNewSectionAsync(sectionModel.Name, sectionModel.IsForSmokers);
@@ -69,7 +78,7 @@
             if (!found)
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.SectionAlreadyExist, sectionModel.Name));
-                return this.View(sectionModel);
+                return this.Ok(sectionModel);
             }
 
             TempData.AddSuccessMessage(string.Format(ManagerConstants.SectionAddedSuccessfully, sectionModel.Name));

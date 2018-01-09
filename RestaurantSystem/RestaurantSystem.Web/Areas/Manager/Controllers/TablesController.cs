@@ -28,7 +28,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return this.View(tableModel);
+                return this.Ok(tableModel);
             }
 
             //var tableExist = await this.tableService.TableAlreadyExist(tableModel.Number);
@@ -36,7 +36,7 @@
             if (await DoesTheTableExist(tableModel.Number))
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.TableAlreadyExist, tableModel.Number));
-                return this.View(tableModel);
+                return this.Ok(tableModel);
             }
 
             bool found = await this.tableService.AddNewTableAsync(tableModel.Number, tableModel.Seats, tableModel.SectionId);
@@ -44,7 +44,7 @@
             if (!found)
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.TableExistInSection, tableModel.Number));
-                return this.View(tableModel);
+                return this.Ok(tableModel);
             }
 
             TempData.AddSuccessMessage(string.Format(ManagerConstants.TableAddedSuccessfully, tableModel.Number));
@@ -64,7 +64,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return this.View(tableModel);
+                return this.Ok(tableModel);
             }
 
             //var tableExist = await this.tableService.TableAlreadyExist(tableModel.Number);
@@ -72,7 +72,7 @@
             if (!await DoesTheTableExist(tableModel.Number))
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.TableDoesntExist, tableModel.Number));
-                return this.View(tableModel);
+                return this.Ok(tableModel);
             }
 
             bool found = await this.tableService.RemoveTableAsync(tableModel.Number, tableModel.SectionId);
@@ -80,7 +80,7 @@
             if (!found)
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.TableDoesntExist, tableModel.Number));
-                return this.View(tableModel);
+                return this.Ok(tableModel);
             }
 
             TempData.AddSuccessMessage(string.Format(ManagerConstants.TableRemovedSuccessfully, tableModel.Number));
