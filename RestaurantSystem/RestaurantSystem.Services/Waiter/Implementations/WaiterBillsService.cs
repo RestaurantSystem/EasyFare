@@ -1,14 +1,14 @@
 ﻿namespace RestaurantSystem.Services.Waiter.Implementations
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using RestaurantSystem.Data;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Waiter.Contracts;
     using RestaurantSystem.Services.Waiter.Models.Bills;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class WaiterBillsService : IWaiterBillsService
     {
@@ -21,16 +21,16 @@
 
         public async Task<IEnumerable<BillsListingServiceModel>> AllAsync(string waiterId)
         {
-           var orders = await db.Orders.Where(o => o.WaiterId == waiterId && o.OrderTime.Date == DateTime.Today)
-                .ToListAsync();
+            var orders = await db.Orders.Where(o => o.WaiterId == waiterId && o.OrderTime.Date == DateTime.Today)
+                 .ToListAsync();
 
             var bills = new List<Bill>();
 
-            foreach (var order in orders)
+            foreach (var order in orders.Where(a => a.BillId != null))
             {
-                Bill bill = this.db.Bills.FirstOrDefault(b=>b.Id == order.BillId);
+                Bill bill = this.db.Bills.FirstOrDefault(b => b.Id == order.BillId);
                 var ammount = order.ProductOrders.Sum(p => p.Product.Price);
-               
+
                 bills.Add(bill);
             }
 

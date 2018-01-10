@@ -247,6 +247,7 @@
 
                 this.AddErrors(result);
             }
+
             Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
             return this.Ok(model);
         }

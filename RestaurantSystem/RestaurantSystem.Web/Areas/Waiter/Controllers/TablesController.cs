@@ -6,8 +6,8 @@
     using Microsoft.AspNetCore.Mvc;
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Waiter.Contracts;
-    using static WebConstants;
     using RestaurantSystem.Web.Infrastructure.Extensions;
+    using static WebConstants;
 
     [Area(WaiterRole)]
     [Authorize(Roles = WaiterArea)]
@@ -23,7 +23,7 @@
         }
 
         public async Task<IActionResult> Index()
-        => View(await this.tables.AllAsync());
+        => this.View(await this.tables.AllAsync());
 
         public async Task<IActionResult> Open(string number, string searchWord = "")
         {
@@ -31,27 +31,27 @@
             var result = await this.tables.OpenTable(number, searchWord);
             if (result == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return View(result);
+            return this.View(result);
         }
 
         public async Task<IActionResult> GetCheck(string tableNumber)
         {
             if (tableNumber == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             var result = await this.tables.GetCheck(tableNumber);
 
             if (result == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return View(result);
+            return this.View(result);
         }
 
         [HttpPost]
@@ -59,19 +59,19 @@
         {
             if (tableNumber == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             var success = await this.tables.PrintCheck(tableNumber);
 
             if (!success)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             TempData.AddSuccessMessage($"Successfully printed bill of table {tableNumber}!");
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }
