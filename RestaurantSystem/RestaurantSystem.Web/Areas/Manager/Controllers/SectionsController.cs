@@ -57,7 +57,7 @@
 
             var sectionsJson = JsonConvert.SerializeObject(sections, settings);
 
-            return this.Json(sectionsJson);
+            return this.Ok(sectionsJson);
         }
 
         public IActionResult Add()

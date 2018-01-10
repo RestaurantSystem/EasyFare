@@ -67,8 +67,6 @@
                 return this.Ok(tableModel);
             }
 
-            //var tableExist = await this.tableService.TableAlreadyExist(tableModel.Number);
-
             if (!await DoesTheTableExist(tableModel.Number))
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.TableDoesntExist, tableModel.Number));
