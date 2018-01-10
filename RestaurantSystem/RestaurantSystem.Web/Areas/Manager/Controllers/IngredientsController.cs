@@ -46,7 +46,7 @@
                 .Take(CookConstants.IngredientsPerPage)
                 .ToList();
 
-            return this.View(ingredients);
+            return this.Ok(ingredients);
         }
 
         public async Task<IActionResult> Buy(int id)
@@ -58,7 +58,7 @@
                 return this.NotFound();
             }
 
-            return this.View(ingredient);
+            return this.Ok(ingredient);
         }
 
         [HttpPost]

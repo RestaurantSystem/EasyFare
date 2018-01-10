@@ -77,7 +77,7 @@
                 .Take(CookConstants.IngredientsPerPage)
                 .ToList();
 
-            return this.View(products);
+            return this.Ok(products);
         }
 
         public async Task<IActionResult> Edit(int id)

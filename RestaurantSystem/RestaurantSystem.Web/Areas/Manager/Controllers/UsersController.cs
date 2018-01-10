@@ -37,7 +37,7 @@
                 })
                 .ToListAsync();
 
-            return this.View(new ManagerUsersViewModel
+            return this.Ok(new ManagerUsersViewModel
             {
                 Users = users,
                 Roles = roles
