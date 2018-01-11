@@ -14,6 +14,7 @@
     using RestaurantSystem.Web.Models.ManageViewModels;
 
     [Authorize]
+    [AllowAnonymous]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {

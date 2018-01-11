@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@
 
     [Authorize]
     [Route("[controller]/[action]")]
+    [EnableCors("AllowSpecificOrigin")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> userManager;

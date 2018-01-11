@@ -40,12 +40,16 @@
 
             services.AddDomainServices();
 
-            services.AddCors();
-
-            services.AddMvc(options =>
+            services.AddCors(options =>
             {
-                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200/"));
             });
+            services.AddMvc();
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -67,10 +71,7 @@
 
             app.UseAuthentication();
 
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:4200")
-                .AllowAnyHeader()
-            );
+            app.UseCors(b => b.WithOrigins("AllowSpecificOrigin"));
 
             app.UseMvc(routes =>
             {

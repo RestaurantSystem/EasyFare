@@ -11,6 +11,8 @@
     using static WebConstants;
     using RestaurantSystem.Web.Infrastructure.Extensions;
 
+
+    [Area(WebConstants.ManagerArea)]
     public class UsersController : Controller
     {
         private readonly IUserService userService;
