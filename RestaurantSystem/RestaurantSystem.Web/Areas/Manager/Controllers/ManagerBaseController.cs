@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Area(WebConstants.ManagerArea)]
-    [Authorize(Roles = WebConstants.ManagerRole)]
+    //[Authorize(Roles = WebConstants.ManagerRole)]
     public class ManagerBaseController : Controller
     {
     }
