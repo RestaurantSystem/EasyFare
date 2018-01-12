@@ -65,6 +65,7 @@
                     var user = await userManager.FindByNameAsync(model.Username);
                     var roles = await userManager.GetRolesAsync(user);
                     roles.Add(model.Username);
+                    roles.Add(user.Id);
                     this.logger.LogInformation("User logged in.");
                     var userName = JsonConvert.SerializeObject(roles);
                     Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
