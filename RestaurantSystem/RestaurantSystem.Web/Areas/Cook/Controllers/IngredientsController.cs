@@ -11,7 +11,7 @@
     using static WebConstants;
 
     [Area(CookRole)]
-    [Authorize(Roles = CookRole)]
+    //[Authorize(Roles = CookRole)]
     public class IngredientsController : Controller
     {
         private readonly ICookIngredientsService ingredients;
@@ -49,7 +49,7 @@
                 .Take(CookConstants.IngredientsPerPage)
                 .ToList();
 
-            return this.View(ingredients);
+            return this.Ok(ingredients);
         }
 
         public async Task<IActionResult> Create() => this.View();

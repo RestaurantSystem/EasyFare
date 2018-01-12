@@ -9,7 +9,7 @@
     using static WebConstants;
 
     [Area(CookRole)]
-    [Authorize(Roles = CookRole)]
+    //[Authorize(Roles = CookRole)]
     public class OrdersController : Controller
     {
         private readonly ICookOrdersService orders;
@@ -23,7 +23,7 @@
         {
             IEnumerable<ProductOrderListModel> orders = await this.orders.GetOrders();
 
-            return View(orders);
+            return this.Ok(orders);
         }
     }
 }

@@ -8,7 +8,7 @@
     using static WebConstants;
 
     [Area(CookRole)]
-    [Authorize(Roles = CookRole)]
+    //[Authorize(Roles = CookRole)]
     public class RecipesController : Controller
     {
         private readonly ICookRecipesService recipes;

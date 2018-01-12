@@ -10,7 +10,7 @@
     using static WebConstants;
 
     [Area(CookRole)]
-    [Authorize(Roles = CookRole)]
+    //[Authorize(Roles = CookRole)]
     public class ProductsController : Controller
     {
         private readonly ICookProductsService products;
@@ -48,7 +48,7 @@
                 .Take(CookConstants.IngredientsPerPage)
                 .ToList();
 
-            return this.View(products);
+            return this.Ok(products);
         }
     }
 }
