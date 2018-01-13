@@ -40,11 +40,11 @@
 
             services.AddDomainServices();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowSpecificOrigin",
+            //        builder => builder.WithOrigins("http://localhost:4200").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            //});
             services.AddMvc();
             //services.AddMvc(options =>
             //{
@@ -71,7 +71,8 @@
 
             app.UseAuthentication();
 
-            app.UseCors(b => b.AllowAnyOrigin());
+            app.UseCors(b => b.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
 
             app.UseMvc(routes =>
             {
