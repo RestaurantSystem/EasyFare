@@ -24,6 +24,6 @@
 
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-        public List<Product> CurrentProducts { get; set; } = new List<Product>();
+        //public List<Product> CurrentProducts { get; set; } = new List<Product>();
     }
 }

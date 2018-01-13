@@ -36,24 +36,30 @@
             foreach (var id in productsIds)
             {
                 Product product = this.db.Products.FirstOrDefault(p => p.Id == id);
-                if (!table.CurrentProducts.Any(p => p.Name == product.Name))
+            }
+
+            var allProductsIds = this.db.Products.Select(a => a.Id);
+            var productsToList = new List<ProductWithQuantityServiceModel>();
+            foreach (var item in allProductsIds)
+            {
+                if (productsIds.Any(a => a == item))
                 {
-                    table.CurrentProducts.Add(product);
-                    await this.db.SaveChangesAsync();
+                    var product = await this.db.Products.Select(p => new ProductWithQuantityServiceModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Quantity = this.db.ProductOrders.Where(o => o.OrderId == table.OrderId && o.ProductId == p.Id).FirstOrDefault().Quantity,
+                        SinglePrice = p.Price
+                    }).FirstOrDefaultAsync(a => a.Id == item);
+
+                    productsToList.Add(product);
                 }
             }
 
             var result = new TableCheckServiceModel
             {
                 Number = table.Number,
-                ProductsOnTable = table.CurrentProducts.Select(p => new ProductWithQuantityServiceModel
-                {
-                    Id = p.Id,
-                    Quantity = this.db.ProductOrders.Where(o => o.OrderId == table.OrderId && o.ProductId == p.Id)
-                    .FirstOrDefault().Quantity,
-                    Name = p.Name,
-                    SinglePrice = p.Price,
-                }).ToList(),
+                ProductsOnTable = productsToList
             };
 
             return result;
@@ -91,7 +97,7 @@
             if (tableOrder != null)
             {
                 var productsIds = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId)
-                    .Select(p => p.ProductId);
+                     .Select(p => p.ProductId);
 
                 foreach (var id in productsIds)
                 {
@@ -99,15 +105,24 @@
                 }
 
                 await this.db.SaveChangesAsync();
-                //var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
-                var productsToList = table.CurrentProducts.Select(p => new ProductWithQuantityServiceModel
+                var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
+                var allProductsIds = this.db.Products.Select(a => a.Id);
+                var productsToList = new List<ProductWithQuantityServiceModel>();
+                foreach (var item in allProductsIds)
                 {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Quantity = this.db.ProductOrders.Where(o => o.OrderId == table.OrderId && o.ProductId == p.Id)
-                    .FirstOrDefault().Quantity,
-                    SinglePrice = p.Price
-                }).ToList();
+                    if (productsIds.Any(a => a == item))
+                    {
+                        var product = await this.db.Products.Select(p => new ProductWithQuantityServiceModel
+                        {
+                            Id = p.Id,
+                            Name = p.Name,
+                            Quantity = this.db.ProductOrders.Where(o => o.OrderId == table.OrderId && o.ProductId == p.Id).FirstOrDefault().Quantity,
+                            SinglePrice = p.Price
+                        }).FirstOrDefaultAsync(a => a.Id == item);
+
+                        productsToList.Add(product);
+                    }
+                }
 
                 result.ProductsOnTable = productsToList;
             }
