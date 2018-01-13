@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    
 }
 
 <h2>Create/Modify recipe for @Model.ProductName</h2>
@@ -12,13 +13,13 @@
     <div class="col-md-4">
         <form method="post" class="form-inline">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div hidden>
-                <input asp-for="RecipeId" />
-            </div>
-            <div hidden>
-                <input asp-for="ProductId" />
-            </div>
             <div class="form-group">
+                <div hidden>
+                    <input type="number" name="RecipeId" value=@Model.RecipeId id="RecipeId" />
+                </div>
+                <div hidden>
+                    <input asp-for="ProductId" />
+                </div>
                 <label asp-for="IngredientId">Ingredient</label>
                 <select asp-for="IngredientId"
                         asp-items="@(new SelectList(Model.Ingredients,"Id","Name"))" class="form-control">

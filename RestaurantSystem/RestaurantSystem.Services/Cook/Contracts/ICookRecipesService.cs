@@ -10,7 +10,7 @@
 
         IEnumerable<RecipeIngredientListModel> GetIngredients(int recipeId);
 
-        Task<int?> AddRecipeIngredient(int? recipeId, int productId, int ingreditnId, double quantity);
+        Task<int> AddRecipeIngredient(int recipeId, int productId, int ingreditnId, double quantity);
 
         Task DeleteIngredients(int recipeId, int[] ingredients);
     }

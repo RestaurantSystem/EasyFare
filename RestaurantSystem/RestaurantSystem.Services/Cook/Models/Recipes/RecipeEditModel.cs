@@ -6,7 +6,7 @@
 
     public class RecipeEditModel
     {
-        public int? RecipeId { get; set; }
+        public int RecipeId { get; set; }
 
         public int ProductId { get; set; }
 

@@ -20,13 +20,13 @@
             this.db = db;
         }
 
-        public async Task<int?> AddRecipeIngredient(int? recipeId, int productId, int ingreditnId, double quantity)
+        public async Task<int> AddRecipeIngredient(int recipeId, int productId, int ingreditnId, double quantity)
         {
             if (!this.db.Products.Any(p => p.Id == productId) || !this.db.Ingredients.Any(i => i.Id == ingreditnId))
             {
-                return null;
+                return 0;
             }
-            else if (recipeId == null)
+            else if (recipeId == 0)
             {
                 Product product = await this.db.Products.FindAsync(productId);
 
@@ -65,7 +65,7 @@
                 {
                     await this.db.RecipeIngredients.AddAsync(new RecipeIngredient
                     {
-                        RecipeId = recipeId.Value,
+                        RecipeId = recipeId,
                         IngredientId = ingreditnId,
                         Quantity = quantity
                     });
@@ -114,7 +114,7 @@
 
             RecipeEditModel recipe = new RecipeEditModel()
             {
-                RecipeId = product.RecipeId,
+                RecipeId = product.RecipeId ?? 0,
                 ProductId = product.Id,
                 ProductName = product.Name,
                 Ingredients = await this.db.Ingredients

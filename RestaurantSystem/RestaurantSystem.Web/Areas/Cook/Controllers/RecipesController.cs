@@ -38,24 +38,24 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(RecipeEditModel recipeModel)
+        public async Task<IActionResult> Edit(RecipeEditModel recModel)
         {
             if (!ModelState.IsValid)
             {
-                return this.View(recipeModel);
+                return this.View(recModel);
             }
 
-            int? recipeId = await this.recipes.AddRecipeIngredient(recipeModel.RecipeId, recipeModel.ProductId, recipeModel.IngredientId, recipeModel.Quantity);
+            int recipeId = await this.recipes.AddRecipeIngredient(recModel.RecipeId, recModel.ProductId, recModel.IngredientId, recModel.Quantity);
 
-            if (recipeId == null)
+            if (recipeId == 0)
             {
                 return this.NotFound();
             }
 
-            recipeModel = await this.recipes.GetRecipeToEdit(recipeModel.ProductId);
-            recipeModel.RecipeId = recipeId;
+            recModel = await this.recipes.GetRecipeToEdit(recModel.ProductId);
+            recModel.RecipeId = recipeId;
 
-            return this.View(recipeModel);
+            return this.View(recModel);
         }
 
         public IActionResult UpdateRecipeIngredients(int? id)

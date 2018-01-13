@@ -31,7 +31,7 @@
             Table table = await this.db.Tables
                 .SingleOrDefaultAsync(t => t.Number == tableNumber);
 
-            var productsIds = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId)
+            var productsIds = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId && po.IsReadyToServe)
                     .Select(p => p.ProductId);
             foreach (var id in productsIds)
             {
@@ -46,11 +46,12 @@
                 {
                     var product = await this.db.Products.Select(p => new ProductWithQuantityServiceModel
                     {
-                        Id = p.Id,
+                        ProductId = p.Id,
                         Name = p.Name,
                         Quantity = this.db.ProductOrders.Where(o => o.OrderId == table.OrderId && o.ProductId == p.Id).FirstOrDefault().Quantity,
+                        IsOnTable = this.db.ProductOrders.Where(o => o.OrderId == table.OrderId && o.ProductId == p.Id).FirstOrDefault().IsReadyToServe,
                         SinglePrice = p.Price
-                    }).FirstOrDefaultAsync(a => a.Id == item);
+                    }).FirstOrDefaultAsync(a => a.ProductId == item);
 
                     productsToList.Add(product);
                 }
@@ -64,10 +65,12 @@
 
             return result;
         }
+       
 
         public async Task<TableOpenedServiceModel> OpenTable(string number, string searchWord)
         {
             var table = await this.db.Tables.SingleOrDefaultAsync(t => t.Number == number);
+
             if (table == null)
             {
                 return null;
@@ -76,6 +79,7 @@
             var products = await this.db.Products
                 .ProjectTo<ProductListModel>()
                 .ToListAsync();
+
             if (!string.IsNullOrEmpty(searchWord))
             {
                 products = await this.db.Products
@@ -84,9 +88,6 @@
                .ToListAsync();
             }
 
-            var tableOrder = this.db.Orders.SingleOrDefault(o => o.Id == table.OrderId);
-
-            table.Order = tableOrder;
             var result = new TableOpenedServiceModel
             {
                 Number = number,
@@ -94,37 +95,12 @@
                 SearchWord = searchWord,
             };
 
-            if (tableOrder != null)
+            if (table.OrderId != null)
             {
-                var productsIds = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId)
-                     .Select(p => p.ProductId);
-
-                foreach (var id in productsIds)
-                {
-                    Product product = this.db.Products.FirstOrDefault(p => p.Id == id);
-                }
-
-                await this.db.SaveChangesAsync();
-                var productOrder = this.db.ProductOrders.FirstOrDefault(po => po.OrderId == table.OrderId);
-                var allProductsIds = this.db.Products.Select(a => a.Id);
-                var productsToList = new List<ProductWithQuantityServiceModel>();
-                foreach (var item in allProductsIds)
-                {
-                    if (productsIds.Any(a => a == item))
-                    {
-                        var product = await this.db.Products.Select(p => new ProductWithQuantityServiceModel
-                        {
-                            Id = p.Id,
-                            Name = p.Name,
-                            Quantity = this.db.ProductOrders.Where(o => o.OrderId == table.OrderId && o.ProductId == p.Id).FirstOrDefault().Quantity,
-                            SinglePrice = p.Price
-                        }).FirstOrDefaultAsync(a => a.Id == item);
-
-                        productsToList.Add(product);
-                    }
-                }
-
-                result.ProductsOnTable = productsToList;
+                result.ProductsOnTable = this.db.ProductOrders
+                    .Where(po => po.OrderId == table.OrderId)
+                    .ProjectTo<ProductWithQuantityServiceModel>()
+                    .ToList();
             }
 
             return result;
@@ -143,7 +119,7 @@
                 return false;
             }
 
-            var orders = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId);
+            var orders = this.db.ProductOrders.Where(po => po.OrderId == table.OrderId && po.IsReadyToServe);
 
             if (orders == null)
             {
@@ -168,6 +144,8 @@
             order.BillId = bill.Id;
 
             this.db.RemoveRange(orders);
+
+            table.OrderId = null;
 
             await this.db.SaveChangesAsync();
 

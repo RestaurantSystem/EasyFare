@@ -29,7 +29,9 @@
             {
                 return false;
             }
+
             Product product = await this.db.Products.SingleOrDefaultAsync(p => p.Id == productId);
+
             if (table.OrderId == null)
             {
                 Order order = new Order
@@ -39,8 +41,11 @@
                 };
 
                 waiter.OrdersAsWaiter.Add(order);
+
                 this.db.Add(order);
+
                 table.OrderId = order.Id;
+
                 await this.db.SaveChangesAsync();
 
                 ProductOrder po = new ProductOrder
@@ -48,25 +53,27 @@
                     ProductId = productId,
                     OrderId = order.Id
                 };
-                this.db.Add(po);
+
                 await this.db.SaveChangesAsync();
-                if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
+
+                this.db.Add(po);
+
+                po.Quantity = 1;
+
+                if (!product.IsCookable)
                 {
-                    po.Quantity = 1;
-                }
-                else
-                {
-                    ProductOrder existing = this.db.ProductOrders.FirstOrDefault(p => p.ProductId == productId &&
-                    p.OrderId == table.OrderId);
-                    existing.Quantity++;
+                    po.IsReadyToServe = true;
                 }
 
                 await this.db.SaveChangesAsync();
 
                 order.Tables.Add(table);
+
                 await this.db.SaveChangesAsync();
+
                 return true;
             }
+
             else
             {
                 ProductOrder po = new ProductOrder
@@ -78,7 +85,13 @@
                 if (!this.db.ProductOrders.Any(p => p.OrderId == po.OrderId && p.ProductId == po.ProductId))
                 {
                     po.Quantity = 1;
+
                     this.db.Add(po);
+
+                    if (!product.IsCookable)
+                    {
+                        po.IsReadyToServe = true;
+                    }
                 }
                 else
                 {

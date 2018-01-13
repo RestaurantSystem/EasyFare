@@ -60,13 +60,15 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <h2>Products On Table</h2>
+
+
+            <h2>Ordered products</h2>
             <table class="table table-bordered table-hover">
 
                 <thead>
                     <tr>
                         <th>
-                            Products On Table
+                            Product
                         </th>
 
                         <th>
@@ -85,7 +87,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var product in Model.ProductsOnTable)
+                    @foreach (var product in Model.ProductsOnTable.Where(p => !p.IsOnTable))
             {
                         <tr>
                             <td>
@@ -105,7 +107,73 @@
                                 <form asp-area="Waiter" asp-controller="Products" asp-action="Remove" method="post">
 
 
-                                    <input type="hidden" name="ProductId" value="@product.Id" />
+                                    <input type="hidden" name="ProductId" value="@product.ProductId" />
+                                    <input type="hidden" name="TableNumber" value="@Model.Number" />
+
+
+                                    <input type="submit" class="btn btn-sm btn-danger" value="Remove" />
+
+
+                                </form>
+                            </th>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+
+
+
+
+
+
+
+            <h2>Products On Table</h2>
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Single Price
+                        </th>
+                        <th>
+                            Total Price
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.ProductsOnTable.Where(p => p.IsOnTable))
+            {
+                        <tr>
+                            <td>
+                                @product.Name
+                            </td>
+                            <td>
+                                @product.Quantity
+                            </td>
+                            <td>
+                                @product.SinglePrice
+                            </td>
+                            <td>
+                                @product.Price
+                            </td>
+                            <th>
+
+                                <form asp-area="Waiter" asp-controller="Products" asp-action="Remove" method="post">
+
+
+                                    <input type="hidden" name="ProductId" value="@product.ProductId" />
                                     <input type="hidden" name="TableNumber" value="@Model.Number" />
 
 
@@ -120,7 +188,7 @@
                     <tr>
                         <th>Grand Total</th>
                         <td colspan="4">
-                            @Model.ProductsOnTable.Sum(p=>p.Price)
+                            @Model.ProductsOnTable.Where(p => p.IsOnTable).Sum(p=>p.Price)
                         </td>
                     </tr>
                 </tbody>

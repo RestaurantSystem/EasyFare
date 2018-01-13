@@ -12,10 +12,16 @@
                     Product name
                 </th>
                 <th class="col-xs-1">
-                    ProductType
+                    Product Type
                 </th>
                 <th class="col-xs-1">
-                    WaiterName
+                    Quantity
+                </th>
+                <th class="col-xs-1">
+                    Waiter Name
+                </th>
+                <th class="col-xs-1">
+                    Table
                 </th>
                 <th class="col-xs-1">
                     Order time
@@ -36,7 +42,13 @@
                         @product.ProductType
                     </td>
                     <td>
+                        @product.Quantity
+                    </td>
+                    <td>
                         @product.WaiterName
+                    </td>
+                    <td>
+                        @product.TablesNumbers
                     </td>
                     <td>
                         @product.OrderTime
