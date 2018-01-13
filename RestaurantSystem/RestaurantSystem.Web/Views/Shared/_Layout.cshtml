@@ -56,15 +56,15 @@
                             </div>
                         </li>
                     }
+                    else if (User.IsInRole(WebConstants.WaiterRole))
+                    {
+                        <li><a asp-area="Waiter" asp-controller="Tables" asp-action="Index"><span class="navbarText">Go To Tables</span></a></li>
+                        <li><a asp-area="Waiter" asp-controller="Bills" asp-action="MyBills" asp-route-waiterId="@UserManager.GetUserId(User)"><span class="navbarText">My Bills</span></a></li>
+                    }
                     else if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Users" asp-action="AllTables"><span class="navbarText">Tables</span></a></li>
                     }
-                     @if (User.IsInRole(WebConstants.WaiterRole))
-                    {
-                        <li><a asp-area="Waiter" asp-controller="Tables" asp-action="Index"><span class="navbarText">Go To Tables</span></a></li>
-                        <li><a asp-area="Waiter" asp-controller="Bills" asp-action="MyBills" asp-route-waiterId="@UserManager.GetUserId(User)"><span class="navbarText">My Bills</span></a></li>
-                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
