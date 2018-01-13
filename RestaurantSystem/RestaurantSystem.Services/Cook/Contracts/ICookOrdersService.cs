@@ -7,5 +7,7 @@
     public interface ICookOrdersService
     {
         Task<IEnumerable<ProductOrderListModel>> GetOrders();
+
+        Task ConfirmProductReady(int productId, int orderId);
     }
 }

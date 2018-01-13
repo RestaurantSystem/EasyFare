@@ -25,5 +25,12 @@
 
             return View(orders);
         }
+
+        public async Task<IActionResult> ConfirmReady(int productId, int orderId)
+        {
+            await this.orders.ConfirmProductReady(productId, orderId);
+
+            return this.RedirectToAction(nameof(OrdersController.Index));
+        }
     }
 }
