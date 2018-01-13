@@ -98,6 +98,7 @@
         public IEnumerable<RecipeIngredientListModel> GetIngredients(int recipeId)
         {
             return this.db.RecipeIngredients
+                .Where(r => r.RecipeId == recipeId)
                 .ProjectTo<RecipeIngredientListModel>()
                 .ToList();
         }
