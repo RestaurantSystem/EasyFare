@@ -43,7 +43,7 @@
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:4200/"));
+                    builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
             services.AddMvc();
             //services.AddMvc(options =>
@@ -71,7 +71,7 @@
 
             app.UseAuthentication();
 
-            app.UseCors(b => b.WithOrigins("AllowSpecificOrigin"));
+            app.UseCors(b => b.AllowAnyOrigin());
 
             app.UseMvc(routes =>
             {
