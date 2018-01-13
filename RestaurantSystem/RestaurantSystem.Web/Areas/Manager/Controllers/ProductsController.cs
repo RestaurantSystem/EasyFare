@@ -89,7 +89,7 @@
                 return this.NotFound();
             }
 
-            return this.View(new ProductsListModel
+            return this.Ok(new ProductsListModel
             {
                 Name = product.Name,
                 Price = product.Price,
@@ -103,14 +103,14 @@
         {
             if (!ModelState.IsValid)
             {
-                return this.RedirectToAction(nameof(this.Edit));
+                return Ok(Json("invalid"));
             }
 
             var building = await this.products.FindByIdAsync(productModel.Id);
 
             if (building == null)
             {
-                return this.NotFound();
+                return this.Ok(Json("Not found"));
             }
 
             bool sameName = false;
@@ -125,11 +125,11 @@
             if (!added)
             {
                 TempData.AddErrorMessage(string.Format(ManagerConstants.ProductAlreadyExist, productModel.Name));
-                return this.RedirectToAction(nameof(this.All));
+                return this.Ok(added);
             }
 
             TempData.AddSuccessMessage(string.Format(ManagerConstants.ProductAddedSuccessfully, productModel.Name));
-            return this.RedirectToAction(nameof(this.All));
+            return this.Ok(added);
         }
     }
 }
