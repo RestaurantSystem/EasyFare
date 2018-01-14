@@ -68,7 +68,7 @@
                     roles.Add(user.Id);
                     this.logger.LogInformation("User logged in.");
                     var userName = JsonConvert.SerializeObject(roles);
-                    Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
+                    //Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
                     return this.Ok(userName);
                 }
 
@@ -244,14 +244,14 @@
 
                     await this.signInManager.SignInAsync(user, isPersistent: false);
                     this.logger.LogInformation("User created a new account with password.");
-                    Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
+                    //Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
                     return this.Ok(user);
                 }
 
                 this.AddErrors(result);
             }
 
-            Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
+            //Request.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
             return this.Ok(model);
         }
 
